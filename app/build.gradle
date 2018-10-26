@@ -1,0 +1,156 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.example.android.bakingapp"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName '1.0'
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        /*
+            AndroidX
+
+            testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+         */
+    }
+    dataBinding {
+        enabled true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def supportLibraryVersion = '28.0.0'
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support:preference-v7:$supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    /*
+        AndroidX
+
+        implementation 'androidx.appcompat:appcompat:1.0.0'
+        implementation 'androidx.cardview:cardview:1.0.0'
+        implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+        implementation 'androidx.preference:preference:1.0.0'
+        implementation 'androidx.recyclerview:recyclerview:1.0.0'
+        implementation 'com.google.android.material:material:1.0.0'
+        implementation 'com.google.android.exoplayer:exoplayer:2.9.0'
+    */
+
+    def lifecycleVersion = '1.1.1'
+    implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
+    implementation "android.arch.lifecycle:common-java8:$lifecycleVersion"
+
+    /*
+        AndroidX
+
+        def lifecycleVersion = '2.0.0'
+        implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+        implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+    */
+
+    def roomVersion = '1.1.1'
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
+
+    /*
+        AndroidX
+
+        def roomVersion = '2.0.0'
+        implementation "androidx.room:room-runtime:$roomVersion"
+        annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    */
+
+    def daggerVersion = '2.17'
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+
+    /*
+     * Google Play Services
+     */
+
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-places:16.0.0'
+    implementation 'com.google.android.gms:play-services-vision:17.0.2'
+
+    /*
+     * Firebase Cloud Messaging
+     */
+
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
+    /*
+     * Third-party libraries
+     */
+
+    def retrofitVersion = '2.4.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    /*
+     * Test
+     */
+
+    androidTestImplementation 'junit:junit:4.12'
+
+    def junitBasedLibraryVersion = '1.0.2'
+    androidTestImplementation "com.android.support.test:rules:$junitBasedLibraryVersion"
+    androidTestImplementation "com.android.support.test:runner:$junitBasedLibraryVersion"
+
+    /*
+        AndroidX
+
+        androidTestImplementation 'androidx.test:core:1.0.0'
+
+        def junitBasedLibraryVersion = '1.1.0'
+        androidTestImplementation "androidx.test:rules:$junitBasedLibraryVersion"
+        androidTestImplementation "androidx.test:runner:$junitBasedLibraryVersion"
+    */
+
+    def espressoVersion = '3.0.2'
+    implementation "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espressoVersion"
+
+    /*
+        AndroidX
+
+        def espressoVersion = '3.1.0'
+        implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+        androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+        androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    */
+
+    // Avoid the warning 'all com.android.support libraries must use the exact same version'.
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'com.android.support' && !details.requested.name.contains('multidex')) {
+                details.useVersion supportLibraryVersion
+            }
+        }
+    }
+}
+
+/*
+    Firebase
+
+    apply plugin: 'com.google.gms.google-services'
+*/
