@@ -18,46 +18,23 @@ import com.example.android.bakingapp.dummy.DummyContent;
 
 import java.util.List;
 
-/**
- * An activity representing a list of Steps. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link StepDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
-public class StepListActivity extends AppCompatActivity {
-
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
+public class MainActivity extends AppCompatActivity {
+    private boolean isTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_step_list);
+        setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show());
 
         if (findViewById(R.id.step_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-w900dp).
-            // If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
+            isTwoPane = true;
         }
 
         View recyclerView = findViewById(R.id.step_list);
@@ -66,11 +43,11 @@ public class StepListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, mTwoPane));
+        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, isTwoPane));
     }
 
     public static class SimpleItemRecyclerViewAdapter extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-        private final StepListActivity mParentActivity;
+        private final MainActivity mParentActivity;
         private final List<DummyContent.DummyItem> mValues;
         private final boolean mTwoPane;
         private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -79,23 +56,23 @@ public class StepListActivity extends AppCompatActivity {
                 DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
                 if (mTwoPane) {
                     Bundle arguments = new Bundle();
-                    arguments.putString(StepDetailFragment.ARG_ITEM_ID, item.id);
-                    StepDetailFragment fragment = new StepDetailFragment();
+                    arguments.putString(DetailFragment.ARG_ITEM_ID, item.id);
+                    DetailFragment fragment = new DetailFragment();
                     fragment.setArguments(arguments);
                     mParentActivity.getSupportFragmentManager().beginTransaction()
                             .replace(R.id.step_detail_container, fragment)
                             .commit();
                 } else {
                     Context context = view.getContext();
-                    Intent intent = new Intent(context, StepDetailActivity.class);
-                    intent.putExtra(StepDetailFragment.ARG_ITEM_ID, item.id);
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra(DetailFragment.ARG_ITEM_ID, item.id);
 
                     context.startActivity(intent);
                 }
             }
         };
 
-        SimpleItemRecyclerViewAdapter(StepListActivity parent,
+        SimpleItemRecyclerViewAdapter(MainActivity parent,
                                       List<DummyContent.DummyItem> items,
                                       boolean twoPane) {
             mValues = items;
@@ -105,8 +82,7 @@ public class StepListActivity extends AppCompatActivity {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.step_list_content, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.step_list_content, parent, false);
             return new ViewHolder(view);
         }
 
@@ -130,8 +106,8 @@ public class StepListActivity extends AppCompatActivity {
 
             ViewHolder(View view) {
                 super(view);
-                mIdView = view.findViewById(R.id.id_text);
-                mContentView = view.findViewById(R.id.content);
+                mIdView = view.findViewById(R.id.id_text_view);
+                mContentView = view.findViewById(R.id.content_text_view);
             }
         }
     }

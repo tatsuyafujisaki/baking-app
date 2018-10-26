@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".StepListActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -20,14 +20,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StepDetailActivity"
+            android:name=".DetailActivity"
             android:label="@string/title_step_detail"
-            android:parentActivityName=".StepListActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.bakingapp.StepListActivity" />
+                android:value="com.example.android.bakingapp.MainActivity" />
         </activity>
     </application>
-
 </manifest>
