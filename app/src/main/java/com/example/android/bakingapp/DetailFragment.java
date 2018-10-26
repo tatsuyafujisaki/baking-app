@@ -17,28 +17,34 @@ public class DetailFragment extends Fragment {
     private DummyContent.DummyItem mItem;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FragmentDetailBinding binding = FragmentDetailBinding.inflate(inflater, container, false);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
+        String id = null;
+
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey(ARG_ITEM_ID)) {
+            id = bundle.getString(ARG_ITEM_ID);
+        } else {
+            bundle = getActivity().getIntent().getExtras();
+
+            if (bundle != null && bundle.containsKey(ARG_ITEM_ID)) {
+                id = bundle.getString(ARG_ITEM_ID);
+            }
+        }
+
+        if (id != null) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = DummyContent.ITEM_MAP.get(id);
 
             CollapsingToolbarLayout appBarLayout = getActivity().findViewById(R.id.collapsing_toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(mItem.content);
             }
-        }
-    }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentDetailBinding binding = FragmentDetailBinding.inflate(inflater, container, false);
-
-        if (mItem != null) {
-            binding.stepDetailTextView.setText(mItem.details);
+            binding.textView.setText(mItem.details);
         }
 
         return binding.getRoot();

@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bakingapp.databinding.ActivityMainBinding;
-import com.example.android.bakingapp.databinding.StepListBinding;
 import com.example.android.bakingapp.dummy.DummyContent;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,10 +18,8 @@ public class MainActivity extends AppCompatActivity {
         binding.toolbar.setTitle(getTitle());
         binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show());
 
-        boolean isTwoPane = binding.include.detailFragmentContainer != null;
+        boolean isTwoPane = getResources().getBoolean(R.bool.is_tablet);
 
-        ((StepListBinding) DataBindingUtil.setContentView(this, R.layout.step_list))
-                .stepRecyclerView
-                .setAdapter(new RecyclerViewAdapter(this, DummyContent.ITEMS, isTwoPane));
+        binding.include.stepRecyclerView.setAdapter(new RecyclerViewAdapter(getSupportFragmentManager(), DummyContent.ITEMS, isTwoPane));
     }
 }
