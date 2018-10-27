@@ -21,8 +21,8 @@
             android:layout_marginRight="16dp"
             app:layoutManager="LinearLayoutManager" />
 
-        <fragment
-            android:id="@+id/detail_fragment"
+        <FrameLayout
+            android:id="@+id/detail_fragment_container"
             android:name="com.example.android.bakingapp.DetailFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"

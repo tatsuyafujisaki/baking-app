@@ -2,7 +2,6 @@ package com.example.android.bakingapp;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,33 +19,18 @@ public class DetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentDetailBinding binding = FragmentDetailBinding.inflate(inflater, container, false);
 
-        String id = null;
+        String id = getResources().getBoolean(R.bool.is_tablet)
+                ? Utils.getFragmentArgument(this, ARG_ITEM_ID)
+                : Utils.getActivityIntentExtra(getActivity(), ARG_ITEM_ID);
 
-        Bundle bundle = getArguments();
-        if (bundle != null && bundle.containsKey(ARG_ITEM_ID)) {
-            id = bundle.getString(ARG_ITEM_ID);
-        } else {
-            bundle = getActivity().getIntent().getExtras();
+        // Load the dummy content specified by the fragment
+        // arguments. In a real-world scenario, use a Loader
+        // to load content from a content provider.
+        mItem = DummyContent.ITEM_MAP.get(id);
 
-            if (bundle != null && bundle.containsKey(ARG_ITEM_ID)) {
-                id = bundle.getString(ARG_ITEM_ID);
-            }
-        }
-
-        if (id != null) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(id);
-
-            CollapsingToolbarLayout appBarLayout = getActivity().findViewById(R.id.collapsing_toolbar_layout);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.content);
-            }
-
-            binding.textView.setText(mItem.details);
-        }
+        binding.textView.setText(mItem.details);
 
         return binding.getRoot();
     }
+
 }

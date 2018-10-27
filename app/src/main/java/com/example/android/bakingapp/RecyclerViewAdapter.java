@@ -67,11 +67,9 @@ public final class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
                 DetailFragment detailFragment = new DetailFragment();
                 detailFragment.setArguments(bundle);
 
-                // TODO: Check why DetailFragment in tablet is not redrawn.
                 fragmentManager
                         .beginTransaction()
-                        .detach(fragmentManager.findFragmentById(R.id.detail_fragment))
-                        .attach(detailFragment)
+                        .replace(R.id.detail_fragment_container, detailFragment)
                         .commit();
             } else {
                 Context context = v.getContext();
