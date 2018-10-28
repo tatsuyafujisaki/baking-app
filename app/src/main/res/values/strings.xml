@@ -3,4 +3,5 @@
     <string name="database_name">recipe</string>
     <string name="recipes_base_url">http://go.udacity.com</string>
     <string name="title_step_detail">Step Detail</string>
+    <string name="network_unavailable_error">Network unavailable</string>
 </resources>

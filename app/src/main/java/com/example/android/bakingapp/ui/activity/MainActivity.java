@@ -3,16 +3,15 @@ package com.example.android.bakingapp.ui.activity;
 import android.arch.lifecycle.LiveData;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.ActivityMainBinding;
-import com.example.android.bakingapp.dummy.DummyContent;
 import com.example.android.bakingapp.room.entity.Recipe;
-import com.example.android.bakingapp.ui.adapter.RecyclerViewAdapter;
+import com.example.android.bakingapp.ui.adapter.RecipeAdapter;
 import com.example.android.bakingapp.util.ApiResponse;
+import com.example.android.bakingapp.util.NetworkUtils;
 import com.example.android.bakingapp.viewmodel.RecipeViewModel;
 
 import java.util.List;
@@ -35,13 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        setSupportActionBar(binding.toolbar);
-        binding.toolbar.setTitle(getTitle());
-        binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show());
-
-        boolean isTwoPane = getResources().getBoolean(R.bool.is_tablet);
-
-        binding.include.stepRecyclerView.setAdapter(new RecyclerViewAdapter(getSupportFragmentManager(), DummyContent.ITEMS, isTwoPane));
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            showToast(getString(R.string.network_unavailable_error));
+            return;
+        }
 
         ApiResponse<LiveData<List<Recipe>>> response = recipeViewModel.getRecipes();
 
@@ -54,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
                  */
                 if (!Objects.requireNonNull(recipes).isEmpty()) {
                     this.recipes = recipes;
-
-                    //binding.recyclerView.setAdapter(new MovieAdapter(this, movies));
+                    binding.include.recipeRecyclerView.setAdapter(new RecipeAdapter(getSupportFragmentManager(), recipes));
                     response.data.removeObservers(this);
                 }
             });

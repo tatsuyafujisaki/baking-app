@@ -9,6 +9,7 @@ import android.os.Parcelable;
 import com.example.android.bakingapp.util.converter.IngredientsConverter;
 import com.example.android.bakingapp.util.converter.StepsConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,7 +34,11 @@ public final class Recipe implements Parcelable {
         name = parcel.readString();
         servings = parcel.readInt();
         image = parcel.readString();
+
+        ingredients = new ArrayList<>();
         parcel.readTypedList(ingredients, Ingredient.CREATOR);
+
+        steps = new ArrayList<>();
         parcel.readTypedList(steps, Step.CREATOR);
     }
 

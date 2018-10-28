@@ -8,9 +8,6 @@ public final class Ingredient implements Parcelable {
     public String measure;
     public String ingredient;
 
-    public Ingredient() {
-    }
-
     private Ingredient(Parcel parcel) {
         quantity = parcel.readDouble();
         measure = parcel.readString();

@@ -18,9 +18,6 @@ public final class Step implements Parcelable {
     @ColumnInfo(name = "thumbnail_url")
     public String thumbnailURL;
 
-    public Step() {
-    }
-
     private Step(Parcel parcel) {
         id = parcel.readInt();
         shortDescription = parcel.readString();
