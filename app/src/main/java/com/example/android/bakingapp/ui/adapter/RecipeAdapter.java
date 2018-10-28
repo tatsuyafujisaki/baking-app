@@ -34,7 +34,10 @@ public final class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.binding.textView.setText(recipes.get(position).name);
+        Recipe recipe = recipes.get(position);
+
+        holder.binding.nameTextView.setText(recipe.name);
+        holder.binding.servingsTextView.setText(holder.itemView.getContext().getString(R.string.servings_format, recipe.servings));
     }
 
     @Override

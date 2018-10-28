@@ -1,4 +1,4 @@
-package com.example.android.bakingapp.room.entity;
+package com.example.android.bakingapp.room;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.os.Parcel;

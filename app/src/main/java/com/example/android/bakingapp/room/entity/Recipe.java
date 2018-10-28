@@ -6,6 +6,8 @@ import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.android.bakingapp.room.Ingredient;
+import com.example.android.bakingapp.room.Step;
 import com.example.android.bakingapp.util.converter.IngredientsConverter;
 import com.example.android.bakingapp.util.converter.StepsConverter;
 
@@ -18,7 +20,6 @@ public final class Recipe implements Parcelable {
     public int id;
     public String name;
     public int servings;
-    public String image;
 
     @TypeConverters(IngredientsConverter.class)
     public List<Ingredient> ingredients;
@@ -33,7 +34,6 @@ public final class Recipe implements Parcelable {
         id = parcel.readInt();
         name = parcel.readString();
         servings = parcel.readInt();
-        image = parcel.readString();
 
         ingredients = new ArrayList<>();
         parcel.readTypedList(ingredients, Ingredient.CREATOR);
@@ -52,7 +52,6 @@ public final class Recipe implements Parcelable {
         dest.writeInt(id);
         dest.writeString(name);
         dest.writeInt(servings);
-        dest.writeString(image);
         dest.writeTypedList(ingredients);
         dest.writeTypedList(steps);
     }

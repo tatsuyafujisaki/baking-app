@@ -3,7 +3,7 @@ package com.example.android.bakingapp.util.converter;
 import android.arch.persistence.room.TypeConverter;
 import android.support.annotation.NonNull;
 
-import com.example.android.bakingapp.room.entity.Ingredient;
+import com.example.android.bakingapp.room.Ingredient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
