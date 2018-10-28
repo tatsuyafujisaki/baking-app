@@ -5,24 +5,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ThemeWithoutActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
     <style name="default_layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="match_parents">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+    <style name="vertical_linear_layout" parent="default_layout">
+        <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="wrap_contents">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="padded_vertical_linear_layout" parent="vertical_linear_layout">
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="default_card_view" parent="CardView">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/card_margin</item>
+        <item name="cardElevation">4dp</item>
     </style>
 </resources>

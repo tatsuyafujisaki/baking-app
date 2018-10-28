@@ -8,8 +8,6 @@ import android.view.MenuItem;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.ActivityDetailBinding;
 
-import java.util.Objects;
-
 import dagger.android.AndroidInjection;
 
 public class DetailActivity extends AppCompatActivity {
@@ -20,13 +18,7 @@ public class DetailActivity extends AppCompatActivity {
 
         ActivityDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
-        // Set toolbar
-        setSupportActionBar(binding.toolbar);
-
         // binding.collapsingToolbarLayout.setTitle(DummyContent.ITEM_MAP.get(UiUtils.getActivityIntentExtra(this, ARG_ITEM_ID)).content);
-
-        // Show Home (a.k.a. Up) button on toolbar
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

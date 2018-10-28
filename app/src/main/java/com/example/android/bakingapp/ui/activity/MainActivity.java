@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             response.data.observe(this, recipes -> {
                 /*
                  * This observer is called twice.
-                 * For the first time, recipes is null because downloading recipes has not completed.
+                 * For the first time, recipes is null because downloading recipes in a different thread has not completed.
                  * For the second time, recipes is not null because downloading recipes in a different thread has completed.
                  */
                 if (!Objects.requireNonNull(recipes).isEmpty()) {
