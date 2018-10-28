@@ -1,4 +1,4 @@
-package com.example.android.bakingapp;
+package com.example.android.bakingapp.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.RecyclerviewItemBinding;
 import com.example.android.bakingapp.dummy.DummyContent;
+import com.example.android.bakingapp.ui.activity.DetailActivity;
+import com.example.android.bakingapp.ui.fragment.DetailFragment;
 
 import java.util.List;
 
@@ -21,7 +24,7 @@ public final class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView
     private final List<DummyContent.DummyItem> items;
     private final boolean isTwoPane;
 
-    RecyclerViewAdapter(FragmentManager fragmentManager, List<DummyContent.DummyItem> items, boolean isTwoPane) {
+    public RecyclerViewAdapter(FragmentManager fragmentManager, List<DummyContent.DummyItem> items, boolean isTwoPane) {
         this.items = items;
         this.fragmentManager = fragmentManager;
         this.isTwoPane = isTwoPane;

@@ -1,0 +1,29 @@
+package com.example.android.bakingapp.room;
+
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
+
+import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.room.dao.RecipeDao;
+import com.example.android.bakingapp.room.entity.Recipe;
+
+@Database(entities = { Recipe.class}, version = 1, exportSchema = false)
+public abstract class RecipeDatabase extends RoomDatabase {
+    private static RecipeDatabase instance;
+
+    public static RecipeDatabase getInstance(Context context) {
+        if (instance == null) {
+            synchronized (RecipeDatabase.class) {
+                if (instance == null) {
+                    instance = Room.databaseBuilder(context.getApplicationContext(), RecipeDatabase.class, context.getString(R.string.database_name)).build();
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    public abstract RecipeDao recipeDao();
+}
