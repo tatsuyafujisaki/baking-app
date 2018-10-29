@@ -12,13 +12,10 @@
 
     <style name="vertical_linear_layout" parent="default_layout">
         <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/linear_layout_padding</item>
     </style>
 
-    <style name="padded_vertical_linear_layout" parent="vertical_linear_layout">
-        <item name="android:padding">16dp</item>
-    </style>
-
-    <style name="default_card_view" parent="CardView">
+    <style name="card_view" parent="CardView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/card_margin</item>
