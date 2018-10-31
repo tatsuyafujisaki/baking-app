@@ -30,7 +30,7 @@
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/ingredient_recycler_view"
-                        style="@style/recycler_view_in_constraint_layout"
+                        style="@style/linear_recycler_view_in_constraint_layout"
                         android:nestedScrollingEnabled="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/step_recycler_view"
-                        style="@style/recycler_view_in_constraint_layout"
+                        style="@style/linear_recycler_view_in_constraint_layout"
                         android:nestedScrollingEnabled="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

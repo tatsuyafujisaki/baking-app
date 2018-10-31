@@ -6,7 +6,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
-            style="@style/linear_recycler_view"
+            style="@style/grid_recycler_view"
             tools:listitem="@layout/recipe_recycler_view_item" />
     </ScrollView>
 </layout>

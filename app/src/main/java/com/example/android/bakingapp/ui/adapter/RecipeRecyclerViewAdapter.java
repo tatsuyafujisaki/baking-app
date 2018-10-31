@@ -15,6 +15,7 @@ import com.example.android.bakingapp.ui.activity.DetailActivity;
 import com.example.android.bakingapp.ui.fragment.DetailFragment;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
 import com.example.android.bakingapp.util.ui.IntentUtils;
+import com.example.android.bakingapp.util.ui.ResourceUtils;
 
 import java.util.List;
 
@@ -60,13 +61,7 @@ public final class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<Recipe
 
             Recipe recipe = recipes.get(getAdapterPosition());
 
-            if (context.getResources().getBoolean(R.bool.is_tablet)) {
-                DetailFragment detailFragment = new DetailFragment();
-                FragmentUtils.setArguments(detailFragment, recipe);
-                fragmentManager.beginTransaction().replace(R.id.detail_fragment_container, detailFragment).commit();
-            } else {
-                context.startActivity(IntentUtils.createIntent(context, DetailActivity.class, recipe));
-            }
+            context.startActivity(IntentUtils.createIntent(context, DetailActivity.class, recipe));
         }
     }
 }

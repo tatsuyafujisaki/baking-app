@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.widget.Toast;
 
 import com.example.android.bakingapp.R;
@@ -14,6 +15,7 @@ import com.example.android.bakingapp.ui.adapter.RecipeRecyclerViewAdapter;
 import com.example.android.bakingapp.util.ApiResponse;
 import com.example.android.bakingapp.util.NetworkUtils;
 import com.example.android.bakingapp.util.ui.BundleUtils;
+import com.example.android.bakingapp.util.ui.ResourceUtils;
 import com.example.android.bakingapp.viewmodel.RecipeViewModel;
 
 import java.util.List;
@@ -41,15 +43,20 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        if(ResourceUtils.isTablet(getResources())) {
+            ((GridLayoutManager) Objects.requireNonNull(binding.recyclerView.getLayoutManager()))
+                    .setSpanCount(ResourceUtils.getGridColumnSpan(getResources(), R.integer.recipe_grid_column_width));
+        }
+
         if (savedInstanceState != null) {
             recipes = BundleUtils.getParcelableArrayList(savedInstanceState);
-            binding.include.recipeRecyclerView.setAdapter(new RecipeRecyclerViewAdapter(getSupportFragmentManager(), recipes));
+            binding.recyclerView.setAdapter(new RecipeRecyclerViewAdapter(getSupportFragmentManager(), recipes));
             return;
         }
 
         ApiResponse<LiveData<List<Recipe>>> response = recipeViewModel.getRecipes();
 
-        if(response.isSuccessful) {
+        if (response.isSuccessful) {
             response.data.observe(this, recipes -> {
                 /*
                  * This observer is called twice.
@@ -58,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                  */
                 if (!Objects.requireNonNull(recipes).isEmpty()) {
                     this.recipes = recipes;
-                    binding.include.recipeRecyclerView.setAdapter(new RecipeRecyclerViewAdapter(getSupportFragmentManager(), recipes));
+                    binding.recyclerView.setAdapter(new RecipeRecyclerViewAdapter(getSupportFragmentManager(), recipes));
                     response.data.removeObservers(this);
                 }
             });
