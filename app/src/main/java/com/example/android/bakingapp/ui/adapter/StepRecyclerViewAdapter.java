@@ -5,21 +5,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.example.android.bakingapp.databinding.StepViewHolderBinding;
+import com.example.android.bakingapp.databinding.StepRecyclerViewItemBinding;
 import com.example.android.bakingapp.room.Step;
 
 import java.util.List;
 
-public final class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
+public final class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
     private final List<Step> steps;
 
-    public StepAdapter(List<Step> steps) {
+    public StepRecyclerViewAdapter(List<Step> steps) {
         this.steps = steps;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(StepViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(StepRecyclerViewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -34,9 +34,9 @@ public final class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHold
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        final StepViewHolderBinding binding;
+        final StepRecyclerViewItemBinding binding;
 
-        ViewHolder(StepViewHolderBinding binding) {
+        ViewHolder(StepRecyclerViewItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

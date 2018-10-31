@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.ActivityMainBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
-import com.example.android.bakingapp.ui.adapter.RecipeAdapter;
+import com.example.android.bakingapp.ui.adapter.RecipeRecyclerViewAdapter;
 import com.example.android.bakingapp.util.ApiResponse;
 import com.example.android.bakingapp.util.NetworkUtils;
 import com.example.android.bakingapp.util.ui.BundleUtils;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             recipes = BundleUtils.getParcelableArrayList(savedInstanceState);
-            binding.include.recipeRecyclerView.setAdapter(new RecipeAdapter(getSupportFragmentManager(), recipes));
+            binding.include.recipeRecyclerView.setAdapter(new RecipeRecyclerViewAdapter(getSupportFragmentManager(), recipes));
             return;
         }
 
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                  */
                 if (!Objects.requireNonNull(recipes).isEmpty()) {
                     this.recipes = recipes;
-                    binding.include.recipeRecyclerView.setAdapter(new RecipeAdapter(getSupportFragmentManager(), recipes));
+                    binding.include.recipeRecyclerView.setAdapter(new RecipeRecyclerViewAdapter(getSupportFragmentManager(), recipes));
                     response.data.removeObservers(this);
                 }
             });

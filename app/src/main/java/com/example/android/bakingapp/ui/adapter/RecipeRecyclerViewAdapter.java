@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.databinding.RecipeViewHolderBinding;
+import com.example.android.bakingapp.databinding.RecipeRecyclerViewItemBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.activity.DetailActivity;
 import com.example.android.bakingapp.ui.fragment.DetailFragment;
@@ -18,18 +18,18 @@ import com.example.android.bakingapp.util.ui.IntentUtils;
 
 import java.util.List;
 
-public final class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
+public final class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
     private final FragmentManager fragmentManager;
     private final List<Recipe> recipes;
 
-    public RecipeAdapter(FragmentManager fragmentManager, List<Recipe> recipes) {
+    public RecipeRecyclerViewAdapter(FragmentManager fragmentManager, List<Recipe> recipes) {
         this.recipes = recipes;
         this.fragmentManager = fragmentManager;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(RecipeViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(RecipeRecyclerViewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -46,9 +46,9 @@ public final class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final RecipeViewHolderBinding binding;
+        final RecipeRecyclerViewItemBinding binding;
 
-        ViewHolder(RecipeViewHolderBinding binding) {
+        ViewHolder(RecipeRecyclerViewItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);

@@ -5,21 +5,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.example.android.bakingapp.databinding.IngredientViewHolderBinding;
+import com.example.android.bakingapp.databinding.IngredientRecyclerViewItemBinding;
 import com.example.android.bakingapp.room.Ingredient;
 
 import java.util.List;
 
-public final class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
+public final class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
     private final List<Ingredient> ingredients;
 
-    public IngredientAdapter(List<Ingredient> ingredients) {
+    public IngredientRecyclerViewAdapter(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(IngredientViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(IngredientRecyclerViewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -37,9 +37,9 @@ public final class IngredientAdapter extends RecyclerView.Adapter<IngredientAdap
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        final IngredientViewHolderBinding binding;
+        final IngredientRecyclerViewItemBinding binding;
 
-        ViewHolder(IngredientViewHolderBinding binding) {
+        ViewHolder(IngredientRecyclerViewItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

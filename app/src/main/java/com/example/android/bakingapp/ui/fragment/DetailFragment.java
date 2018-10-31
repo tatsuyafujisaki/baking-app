@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.FragmentDetailBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
-import com.example.android.bakingapp.ui.adapter.IngredientAdapter;
-import com.example.android.bakingapp.ui.adapter.StepAdapter;
+import com.example.android.bakingapp.ui.adapter.IngredientRecyclerViewAdapter;
+import com.example.android.bakingapp.ui.adapter.StepRecyclerViewAdapter;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
 import com.example.android.bakingapp.util.ui.IntentUtils;
 
@@ -33,8 +33,8 @@ public class DetailFragment extends Fragment {
                         ? FragmentUtils.getArguments(this)
                         : IntentUtils.getParcelableExtra(this);
 
-        binding.ingredientRecyclerView.setAdapter(new IngredientAdapter(recipe.ingredients));
-        binding.stepRecyclerView.setAdapter(new StepAdapter(recipe.steps));
+        binding.ingredientRecyclerView.setAdapter(new IngredientRecyclerViewAdapter(recipe.ingredients));
+        binding.stepRecyclerView.setAdapter(new StepRecyclerViewAdapter(recipe.steps));
 
         return binding.getRoot();
     }
