@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.constraint.ConstraintLayout style="@style/default_layout">
+
+        <TextView
+            android:id="@+id/ingredient_text_view"
+            style="@style/constraint_layout_child"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/quantity_text_view"
+            style="@style/constraint_layout_child"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/measure_text_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/measure_text_view"
+            style="@style/constraint_layout_child"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem" />
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/name_text_view"
-        style="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:textIsSelectable="true" />
+    <android.support.v4.widget.NestedScrollView
+        style="@style/match_parents"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <LinearLayout style="@style/vertical_linear_layout">
+
+            <android.support.v7.widget.CardView style="@style/card_view">
+
+                <LinearLayout style="@style/vertical_linear_layout">
+
+                    <TextView
+                        style="@style/default_layout"
+                        android:text="@string/ingredients_label" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/ingredient_recycler_view"
+                        style="@style/recycler_view"
+                        android:nestedScrollingEnabled="true" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView style="@style/card_view">
+
+                <LinearLayout style="@style/vertical_linear_layout">
+
+                    <TextView
+                        style="@style/default_layout"
+                        android:text="@string/steps_label" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/step_recycler_view"
+                        style="@style/recycler_view"
+                        android:nestedScrollingEnabled="true" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

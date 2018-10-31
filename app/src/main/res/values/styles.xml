@@ -1,4 +1,5 @@
 <resources>
+
     <style name="ThemeWithActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,9 +11,20 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="match_parents">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
     <style name="vertical_linear_layout" parent="default_layout">
         <item name="android:orientation">vertical</item>
         <item name="android:padding">@dimen/linear_layout_padding</item>
+    </style>
+
+    <style name="recycler_view" parent="default_layout">
+        <item name="android:clipToPadding">false</item>
+        <item name="android:numColumns">auto_fit</item>
+        <item name="layoutManager">LinearLayoutManager</item>
     </style>
 
     <style name="card_view" parent="CardView">
@@ -20,5 +32,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/card_margin</item>
         <item name="cardElevation">4dp</item>
+    </style>
+
+    <style name="constraint_layout_child">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 </resources>

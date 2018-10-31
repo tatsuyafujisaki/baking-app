@@ -14,8 +14,7 @@
 
                 <TextView
                     android:id="@+id/servings_text_view"
-                    style="@style/default_layout"
-                    android:textAppearance="?attr/textAppearanceListItemSecondary" />
+                    style="@style/default_layout" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>

@@ -3,6 +3,7 @@ package com.example.android.bakingapp.ui.activity;
 import android.arch.lifecycle.LiveData;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.adapter.RecipeAdapter;
 import com.example.android.bakingapp.util.ApiResponse;
 import com.example.android.bakingapp.util.NetworkUtils;
+import com.example.android.bakingapp.util.ui.BundleUtils;
 import com.example.android.bakingapp.viewmodel.RecipeViewModel;
 
 import java.util.List;
@@ -29,13 +31,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
+        super.onCreate(savedInstanceState);
 
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));
+            return;
+        }
+
+        if (savedInstanceState != null) {
+            recipes = BundleUtils.getParcelableArrayList(savedInstanceState);
+            binding.include.recipeRecyclerView.setAdapter(new RecipeAdapter(getSupportFragmentManager(), recipes));
             return;
         }
 
@@ -45,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
             response.data.observe(this, recipes -> {
                 /*
                  * This observer is called twice.
-                 * For the first time, recipes is null because downloading recipes in a different thread has not completed.
-                 * For the second time, recipes is not null because downloading recipes in a different thread has completed.
+                 * For the first time, child_activity_main.xml.xml is null because downloading child_activity_main.xml.xml in a different thread has not completed.
+                 * For the second time, child_activity_main.xml.xml is not null because downloading child_activity_main.xml.xml in a different thread has completed.
                  */
                 if (!Objects.requireNonNull(recipes).isEmpty()) {
                     this.recipes = recipes;
@@ -57,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             showToast(response.errorMessage);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        BundleUtils.putParcelableList(outState, recipes);
+        super.onSaveInstanceState(outState);
     }
 
     private void showToast(String text) {

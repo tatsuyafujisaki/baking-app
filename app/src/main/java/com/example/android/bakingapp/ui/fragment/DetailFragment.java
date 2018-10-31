@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.FragmentDetailBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
+import com.example.android.bakingapp.ui.adapter.IngredientAdapter;
+import com.example.android.bakingapp.ui.adapter.StepAdapter;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
 import com.example.android.bakingapp.util.ui.IntentUtils;
 
@@ -31,14 +33,9 @@ public class DetailFragment extends Fragment {
                         ? FragmentUtils.getArguments(this)
                         : IntentUtils.getParcelableExtra(this);
 
-        // Load the dummy content specified by the fragment
-        // arguments. In a real-world scenario, use a Loader
-        // to load content from a content provider.
-        // mItem = DummyContent.ITEM_MAP.get(id);
-
-        // binding.textView.setText(mItem.details);
+        binding.ingredientRecyclerView.setAdapter(new IngredientAdapter(recipe.ingredients));
+        binding.stepRecyclerView.setAdapter(new StepAdapter(recipe.steps));
 
         return binding.getRoot();
     }
-
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ScrollView style="@style/default_layout">
+    <ScrollView style="@style/match_parents">
 
         <include
             android:id="@+id/include"
-            layout="@layout/recipes" />
+            layout="@layout/child_activity_main" />
     </ScrollView>
 </layout>
