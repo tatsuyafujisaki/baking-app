@@ -16,9 +16,8 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="vertical_linear_layout" parent="default_layout">
-        <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/linear_layout_padding</item>
+    <style name="scroll_view" parent="match_parents">
+        <item name="android:fillViewport">true</item>
     </style>
 
     <style name="recycler_view" parent="default_layout">
