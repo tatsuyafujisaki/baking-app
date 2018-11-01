@@ -15,10 +15,8 @@
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        style="@style/guideline"
+        app:layout_constraintGuide_percent="@dimen/activity_detail_guideline" />
 
     <TextView
         android:layout_width="wrap_content"
