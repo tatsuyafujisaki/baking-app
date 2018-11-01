@@ -9,7 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.widget.Toast;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.databinding.ActivityMainBinding;
+import com.example.android.bakingapp.databinding.ActivityRecipeBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.adapter.RecipeRecyclerViewAdapter;
 import com.example.android.bakingapp.util.ApiResponse;
@@ -25,7 +25,7 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 
-public class MainActivity extends AppCompatActivity {
+public class RecipeActivity extends AppCompatActivity {
     @Inject
     RecipeViewModel recipeViewModel;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityRecipeBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
 
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             recipes = BundleUtils.getParcelableArrayList(savedInstanceState);
-            binding.recyclerView.setAdapter(new RecipeRecyclerViewAdapter(getSupportFragmentManager(), recipes));
+            setAdapter(binding);
             return;
         }
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                  */
                 if (!Objects.requireNonNull(recipes).isEmpty()) {
                     this.recipes = recipes;
-                    binding.recyclerView.setAdapter(new RecipeRecyclerViewAdapter(getSupportFragmentManager(), recipes));
+                    setAdapter(binding);
                     response.data.removeObservers(this);
                 }
             });
@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         BundleUtils.putParcelableList(outState, recipes);
         super.onSaveInstanceState(outState);
+    }
+
+    private void setAdapter(ActivityRecipeBinding binding){
+        binding.recyclerView.setAdapter(new RecipeRecyclerViewAdapter(recipes));
     }
 
     private void showToast(String text) {

@@ -10,7 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 public class StepsConverter {
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     @TypeConverter
     public static String toJson(@NonNull List<Step> Steps) {

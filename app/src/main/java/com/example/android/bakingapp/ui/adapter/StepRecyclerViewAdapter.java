@@ -3,6 +3,8 @@ package com.example.android.bakingapp.ui.adapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.example.android.bakingapp.databinding.StepRecyclerViewItemBinding;
@@ -33,12 +35,17 @@ public final class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecy
         return steps.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
         final StepRecyclerViewItemBinding binding;
 
         ViewHolder(StepRecyclerViewItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            binding.getRoot().setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
         }
     }
 }

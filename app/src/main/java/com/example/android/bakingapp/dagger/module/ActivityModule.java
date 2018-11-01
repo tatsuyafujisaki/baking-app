@@ -1,7 +1,7 @@
 package com.example.android.bakingapp.dagger.module;
 
-import com.example.android.bakingapp.ui.activity.DetailActivity;
-import com.example.android.bakingapp.ui.activity.MainActivity;
+import com.example.android.bakingapp.ui.activity.RecipeDetailActivity;
+import com.example.android.bakingapp.ui.activity.RecipeActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -9,8 +9,8 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class ActivityModule {
     @ContributesAndroidInjector
-    abstract MainActivity contributeMainActivity();
+    abstract RecipeActivity contributeMainActivity();
 
     @ContributesAndroidInjector
-    abstract DetailActivity contributeDetailActivity();
+    abstract RecipeDetailActivity contributeDetailActivity();
 }

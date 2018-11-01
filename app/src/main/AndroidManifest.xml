@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.android.bakingapp" >
+          package="com.example.android.bakingapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name="com.example.android.bakingapp.dagger.MyApplication"
@@ -9,26 +12,25 @@
         android:label="@string/application_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/ThemeWithActionBar" >
+        android:theme="@style/ThemeWithActionBar"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.activity.RecipeActivity"
             android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.DetailActivity"
+            android:name=".ui.activity.RecipeDetailActivity"
             android:label="@string/detail_activity_label"
-            android:parentActivityName=".ui.activity.MainActivity" >
+            android:parentActivityName=".ui.activity.RecipeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.bakingapp.ui.activity.MainActivity" />
+                android:value="com.example.android.bakingapp.ui.activity.RecipeActivity" />
         </activity>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.bakingapp.databinding.FragmentDetailBinding;
+import com.example.android.bakingapp.databinding.FragmentRecipeDetailBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.adapter.IngredientRecyclerViewAdapter;
 import com.example.android.bakingapp.ui.adapter.StepRecyclerViewAdapter;
@@ -16,7 +16,7 @@ import com.example.android.bakingapp.util.ui.IntentUtils;
 
 import dagger.android.support.AndroidSupportInjection;
 
-public class DetailFragment extends Fragment {
+public class RecipeDetailFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
@@ -25,7 +25,7 @@ public class DetailFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentDetailBinding binding = FragmentDetailBinding.inflate(inflater, container, false);
+        FragmentRecipeDetailBinding binding = FragmentRecipeDetailBinding.inflate(inflater, container, false);
 
         Recipe recipe = IntentUtils.getParcelableExtra(this);
 

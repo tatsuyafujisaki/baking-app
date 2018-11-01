@@ -19,7 +19,8 @@
         <item name="android:fillViewport">true</item>
     </style>
 
-    <style name="guideline" parents="wrap_contents">
+    <style name="guideline" parent="wrap_contents">
+        <item name="android:showDividers">middle</item>
         <item name="android:orientation">vertical</item>
     </style>
 

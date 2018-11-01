@@ -2,7 +2,6 @@ package com.example.android.bakingapp.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +10,16 @@ import android.view.ViewGroup;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.RecipeRecyclerViewItemBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
-import com.example.android.bakingapp.ui.activity.DetailActivity;
-import com.example.android.bakingapp.ui.fragment.DetailFragment;
-import com.example.android.bakingapp.util.ui.FragmentUtils;
+import com.example.android.bakingapp.ui.activity.RecipeDetailActivity;
 import com.example.android.bakingapp.util.ui.IntentUtils;
-import com.example.android.bakingapp.util.ui.ResourceUtils;
 
 import java.util.List;
 
 public final class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
-    private final FragmentManager fragmentManager;
     private final List<Recipe> recipes;
 
-    public RecipeRecyclerViewAdapter(FragmentManager fragmentManager, List<Recipe> recipes) {
+    public RecipeRecyclerViewAdapter(List<Recipe> recipes) {
         this.recipes = recipes;
-        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -61,7 +55,7 @@ public final class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<Recipe
 
             Recipe recipe = recipes.get(getAdapterPosition());
 
-            context.startActivity(IntentUtils.createIntent(context, DetailActivity.class, recipe));
+            context.startActivity(IntentUtils.createIntent(context, RecipeDetailActivity.class, recipe));
         }
     }
 }

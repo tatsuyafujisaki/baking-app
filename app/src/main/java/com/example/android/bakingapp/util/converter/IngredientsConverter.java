@@ -10,7 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.List;
 
 public class IngredientsConverter {
-    private static Gson gson = new Gson();
+    private static final Gson gson = new Gson();
 
     @TypeConverter
     public static String toJson(@NonNull List<Ingredient> ingredients) {
