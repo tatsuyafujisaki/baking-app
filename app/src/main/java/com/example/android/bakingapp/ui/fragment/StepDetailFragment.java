@@ -13,6 +13,7 @@ import com.example.android.bakingapp.databinding.FragmentStepDetailBinding;
 import com.example.android.bakingapp.room.Step;
 import com.example.android.bakingapp.util.ListUtils;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
+import com.example.android.bakingapp.util.ui.IntentUtils;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
@@ -41,7 +42,7 @@ public class StepDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentStepDetailBinding.inflate(inflater, container, false);
-        step = FragmentUtils.getArguments(this);
+        step = ListUtils.coalesce(FragmentUtils.getArguments(this), IntentUtils.getParcelableExtra(this));
         binding.stepDescriptionTextView.setText(step.description);
 
         return binding.getRoot();
@@ -84,7 +85,7 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void initializePlayer() {
-        String url = ListUtils.coalesce(step.videoURL, step.thumbnailURL);
+        String url = ListUtils.coalesceString(step.videoURL, step.thumbnailURL);
 
         if (url == null) {
             binding.playerView.setVisibility(View.GONE);

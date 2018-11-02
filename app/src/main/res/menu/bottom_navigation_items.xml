@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/previous_step"
+        android:icon="@drawable/ic_chevron_left_24px"
+        android:title="Previous step" />
+    <item
+        android:id="@+id/next_step"
+        android:icon="@drawable/ic_chevron_right_24px"
+        android:title="Next step" />
+</menu>

@@ -8,12 +8,12 @@
     <application
         android:name="com.example.android.bakingapp.dagger.MyApplication"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/application_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/ThemeWithActionBar"
-        android:fullBackupContent="@xml/backup_descriptor">
+        android:theme="@style/ThemeWithActionBar">
         <activity
             android:name=".ui.activity.RecipeActivity"
             android:label="@string/application_name">
@@ -26,11 +26,11 @@
         </activity>
         <activity
             android:name=".ui.activity.RecipeDetailActivity"
-            android:label="@string/detail_activity_label"
-            android:parentActivityName=".ui.activity.RecipeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.bakingapp.ui.activity.RecipeActivity" />
-        </activity>
+            android:label="@string/recipe_detail_activity_label"
+            android:parentActivityName=".ui.activity.RecipeActivity" />
+        <activity
+            android:name=".ui.activity.StepDetailActivity"
+            android:label="@string/step_detail_activity_label"
+            android:parentActivityName=".ui.activity.RecipeDetailActivity" />
     </application>
 </manifest>

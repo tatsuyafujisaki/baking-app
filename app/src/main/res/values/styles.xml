@@ -15,6 +15,10 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="linear_layout" parent="default_layout">
+        <item name="android:orientation">vertical</item>
+    </style>
+
     <style name="scroll_view" parent="match_parents">
         <item name="android:fillViewport">true</item>
     </style>

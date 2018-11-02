@@ -1,5 +1,6 @@
 package com.example.android.bakingapp.ui.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.StepRecyclerViewItemBinding;
 import com.example.android.bakingapp.room.Step;
+import com.example.android.bakingapp.ui.activity.StepDetailActivity;
 import com.example.android.bakingapp.ui.fragment.StepDetailFragment;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
+import com.example.android.bakingapp.util.ui.IntentUtils;
+import com.example.android.bakingapp.util.ui.ResourceUtils;
 
 import java.util.List;
 
@@ -53,9 +57,16 @@ public final class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecy
 
         @Override
         public void onClick(View v) {
-            Fragment fragment = new StepDetailFragment();
-            FragmentUtils.setArguments(fragment, steps.get(getAdapterPosition()));
-            FragmentUtils.replace(fragmentManager,  R.id.step_detail_fragment_placer_holder, fragment);
+            Step step = steps.get(getAdapterPosition());
+
+            if (ResourceUtils.isTablet(v.getResources())) {
+                Fragment fragment = new StepDetailFragment();
+                FragmentUtils.setArguments(fragment, step);
+                FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_placer_holder, fragment);
+            } else {
+                Context context = v.getContext();
+                context.startActivity(IntentUtils.createIntent(context, StepDetailActivity.class, step));
+            }
         }
     }
 }

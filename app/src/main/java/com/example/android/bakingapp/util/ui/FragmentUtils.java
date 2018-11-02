@@ -5,13 +5,12 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import java.util.Objects;
-
 public final class FragmentUtils {
     private static final String KEY = null;
 
     public static <T extends Parcelable> T getArguments(Fragment fragment) {
-        return Objects.requireNonNull(fragment.getArguments()).getParcelable(KEY);
+        Bundle arguments = fragment.getArguments();
+        return arguments != null ? arguments.getParcelable(KEY) : null;
     }
 
     public static void setArguments(Fragment fragment, Parcelable parcelable) {

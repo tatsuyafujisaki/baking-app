@@ -2,7 +2,8 @@
     <string name="application_name">Baking App</string>
     <string name="database_name">recipe</string>
     <string name="recipes_base_url">https://go.udacity.com</string>
-    <string name="detail_activity_label">Recipe Detail</string>
+    <string name="recipe_detail_activity_label">Recipe Detail</string>
+    <string name="step_detail_activity_label">Step Detail</string>
     <string name="network_unavailable_error">Network unavailable</string>
     <string name="servings_format">Servings: %1$d</string>
     <string name="ingredients_label">Ingredients</string>

@@ -25,6 +25,6 @@ public final class NetworkUtils {
         return Picasso.get()
                 .load(path)
                 .placeholder(R.drawable.ic_placeholder)
-                .error(R.drawable.ic_error);
+                .error(R.drawable.ic_error_24px);
     }
 }

@@ -7,11 +7,11 @@ import com.example.android.bakingapp.R;
 
 import dagger.android.AndroidInjection;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class StepDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_detail);
+        setContentView(R.layout.activity_step_detail);
     }
 }
