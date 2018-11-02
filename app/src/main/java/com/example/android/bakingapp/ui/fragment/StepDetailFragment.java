@@ -10,8 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.bakingapp.databinding.FragmentStepDetailBinding;
-import com.example.android.bakingapp.room.entity.Recipe;
-import com.example.android.bakingapp.util.ui.IntentUtils;
+import com.example.android.bakingapp.room.Step;
+import com.example.android.bakingapp.util.ListUtils;
+import com.example.android.bakingapp.util.ui.FragmentUtils;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
@@ -27,7 +28,7 @@ public class StepDetailFragment extends Fragment {
     ExtractorMediaSource.Factory factory;
 
     private FragmentStepDetailBinding binding;
-    private Recipe recipe;
+    private Step step;
     private long currentPosition;
     private boolean playWhenReady = true;
 
@@ -40,13 +41,16 @@ public class StepDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentStepDetailBinding.inflate(inflater, container, false);
-        recipe = IntentUtils.getParcelableExtra(this);
+        step = FragmentUtils.getArguments(this);
+        binding.stepDescriptionTextView.setText(step.description);
+
         return binding.getRoot();
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
         if (Util.SDK_INT >= 24) {
             initializePlayer();
         }
@@ -55,6 +59,7 @@ public class StepDetailFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         if ((Util.SDK_INT < 24 || binding.playerView.getPlayer() == null)) {
             initializePlayer();
         }
@@ -63,6 +68,7 @@ public class StepDetailFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
         if (Util.SDK_INT < 24) {
             releasePlayer();
         }
@@ -71,12 +77,22 @@ public class StepDetailFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+
         if (Util.SDK_INT >= 24) {
             releasePlayer();
         }
     }
 
     private void initializePlayer() {
+        String url = ListUtils.coalesce(step.videoURL, step.thumbnailURL);
+
+        if (url == null) {
+            binding.playerView.setVisibility(View.GONE);
+            return;
+        }
+
+        binding.playerView.setVisibility(View.VISIBLE);
+
         Player player = binding.playerView.getPlayer();
 
         if (player == null) {
@@ -86,9 +102,7 @@ public class StepDetailFragment extends Fragment {
             binding.playerView.setPlayer(player);
         }
 
-        Uri uri = Uri.parse(recipe.steps.get(0).videoURL);
-
-        ((ExoPlayer) player).prepare(factory.createMediaSource(uri), false, true);
+        ((ExoPlayer) player).prepare(factory.createMediaSource(Uri.parse(url)), false, true);
     }
 
     private void releasePlayer() {
