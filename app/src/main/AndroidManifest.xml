@@ -16,7 +16,8 @@
         android:theme="@style/ThemeWithActionBar">
         <activity
             android:name=".ui.activity.RecipeActivity"
-            android:label="@string/application_name">
+            android:label="@string/application_name"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
