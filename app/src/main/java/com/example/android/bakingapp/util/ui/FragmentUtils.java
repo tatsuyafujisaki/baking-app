@@ -21,7 +21,7 @@ public final class FragmentUtils {
         fragment.setArguments(arguments);
     }
 
-    // This method works with dynamic fragments only
+    // This does not work with static fragments
     public static void replace(FragmentManager fragmentManager, int frameLayoutId, Fragment fragment) {
         fragmentManager.beginTransaction().replace(frameLayoutId, fragment).commit();
     }
