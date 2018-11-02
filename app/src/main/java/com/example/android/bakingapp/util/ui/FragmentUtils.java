@@ -11,8 +11,7 @@ public final class FragmentUtils {
     private static final String KEY = null;
 
     public static <T extends Parcelable> T getArguments(Fragment fragment) {
-        Bundle arguments = fragment.getArguments();
-        return Objects.requireNonNull(arguments).getParcelable(KEY);
+        return Objects.requireNonNull(fragment.getArguments()).getParcelable(KEY);
     }
 
     public static void setArguments(Fragment fragment, Parcelable parcelable) {
