@@ -33,13 +33,14 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         this.steps = steps;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(StepRecyclerViewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Step step = steps.get(position);
         holder.binding.nameTextView.setText(step.shortDescription);
     }

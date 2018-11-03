@@ -17,13 +17,14 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
         this.ingredients = ingredients;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(IngredientRecyclerViewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Ingredient ingredient = ingredients.get(position);
 
         holder.binding.ingredientTextView.setText(ingredient.ingredient);
