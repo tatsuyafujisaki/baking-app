@@ -5,18 +5,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public final class Step implements Parcelable {
-    public int id;
+    public final int id;
 
     @ColumnInfo(name = "short_description")
-    public String shortDescription;
+    public final String shortDescription;
 
-    public String description;
+    public final String description;
 
     @ColumnInfo(name = "video_url")
-    public String videoURL;
+    public final String videoURL;
 
     @ColumnInfo(name = "thumbnail_url")
-    public String thumbnailURL;
+    public final String thumbnailURL;
 
     private Step(Parcel parcel) {
         id = parcel.readInt();

@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public final class Ingredient implements Parcelable {
-    public double quantity;
-    public String measure;
-    public String ingredient;
+    public final double quantity;
+    public final String measure;
+    public final String ingredient;
 
     private Ingredient(Parcel parcel) {
         quantity = parcel.readDouble();
