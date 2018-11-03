@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public final class IntentUtils {
+public class IntentUtils {
     public static int getIntExtra(Fragment fragment, String key) {
         return getIntent(fragment).getIntExtra(key, Integer.MIN_VALUE);
     }

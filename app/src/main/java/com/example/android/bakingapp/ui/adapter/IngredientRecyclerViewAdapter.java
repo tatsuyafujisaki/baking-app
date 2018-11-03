@@ -10,7 +10,7 @@ import com.example.android.bakingapp.room.Ingredient;
 
 import java.util.List;
 
-public final class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
+public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.ViewHolder> {
     private final List<Ingredient> ingredients;
 
     public IngredientRecyclerViewAdapter(List<Ingredient> ingredients) {

@@ -1,6 +1,6 @@
 package com.example.android.bakingapp.util;
 
-public final class ApiResponse<T> {
+public class ApiResponse<T> {
     public final boolean isSuccessful;
     public final T data;
     public final String errorMessage;

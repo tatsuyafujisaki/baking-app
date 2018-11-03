@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public final class FragmentUtils {
+public class FragmentUtils {
     public static boolean hasArguments(Fragment fragment) {
         return fragment.getArguments() != null;
     }

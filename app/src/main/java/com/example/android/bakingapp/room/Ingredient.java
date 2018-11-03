@@ -3,7 +3,7 @@ package com.example.android.bakingapp.room;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public final class Ingredient implements Parcelable {
+public class Ingredient implements Parcelable {
     public final double quantity;
     public final String measure;
     public final String ingredient;

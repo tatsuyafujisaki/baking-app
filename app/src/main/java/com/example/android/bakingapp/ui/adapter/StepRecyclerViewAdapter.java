@@ -24,7 +24,7 @@ import com.example.android.bakingapp.util.ui.ResourceUtils;
 
 import java.util.List;
 
-public final class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
+public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
     private final List<Step> steps;
     private final FragmentManager fragmentManager;
 

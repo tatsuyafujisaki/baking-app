@@ -8,8 +8,12 @@ import com.example.android.bakingapp.util.converter.Converter;
 
 import java.util.List;
 
-public final class IntentBuilder {
+public class IntentBuilder {
     private final Intent intent;
+
+    public IntentBuilder() {
+        intent = new Intent();
+    }
 
     public IntentBuilder(Context context, Class<?> cls) {
         intent = new Intent(context, cls);

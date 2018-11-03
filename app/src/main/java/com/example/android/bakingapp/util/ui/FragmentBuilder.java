@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 
-public final class FragmentBuilder {
+public class FragmentBuilder {
     private final Fragment fragment;
     private Bundle arguments;
 

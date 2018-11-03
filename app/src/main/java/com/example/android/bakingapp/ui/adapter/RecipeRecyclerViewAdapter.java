@@ -15,7 +15,7 @@ import com.example.android.bakingapp.util.ui.IntentBuilder;
 
 import java.util.List;
 
-public final class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
+public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
     private final List<Recipe> recipes;
 
     public RecipeRecyclerViewAdapter(List<Recipe> recipes) {

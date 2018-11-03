@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public final class Recipe implements Parcelable {
+public class Recipe implements Parcelable {
     @PrimaryKey
     public int id;
     public String name;

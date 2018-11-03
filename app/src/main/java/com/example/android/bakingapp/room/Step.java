@@ -4,7 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public final class Step implements Parcelable {
+public class Step implements Parcelable {
     public final int id;
 
     @ColumnInfo(name = "short_description")

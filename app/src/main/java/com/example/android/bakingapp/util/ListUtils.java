@@ -2,7 +2,7 @@ package com.example.android.bakingapp.util;
 
 import android.text.TextUtils;
 
-public final class ListUtils {
+public class ListUtils {
     @SafeVarargs
     public static <T> T coalesce(T... xs) {
         for (T x : xs) {

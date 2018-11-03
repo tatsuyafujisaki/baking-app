@@ -2,7 +2,7 @@ package com.example.android.bakingapp.util;
 
 import java.util.Calendar;
 
-public final class MyDateUtils {
+public class MyDateUtils {
     public static class Day {
         public static boolean hasExpired(long dateInMillis, int daysToExpire) {
             return addDays(dateInMillis, daysToExpire) < System.currentTimeMillis();

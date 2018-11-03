@@ -8,7 +8,7 @@ import com.example.android.bakingapp.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
-public final class NetworkUtils {
+public class NetworkUtils {
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
 
