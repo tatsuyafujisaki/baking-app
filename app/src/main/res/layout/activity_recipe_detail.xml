@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              style="@style/default_layout"
-              android:baselineAligned="false">
-
-    <fragment
-        android:id="@+id/recipe_detail_fragment"
-        android:name="com.example.android.bakingapp.ui.fragment.RecipeDetailFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_recipe_detail" />
-
-    <FrameLayout
-        android:id="@+id/step_detail_fragment_container"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:layout="@layout/fragment_step_detail" />
-</LinearLayout>
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/recipe_detail_fragment"
+          android:name="com.example.android.bakingapp.ui.fragment.RecipeDetailFragment"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          tools:layout="@layout/fragment_recipe_detail" />
