@@ -14,7 +14,7 @@ import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.adapter.RecipeRecyclerViewAdapter;
 import com.example.android.bakingapp.util.ApiResponse;
 import com.example.android.bakingapp.util.NetworkUtils;
-import com.example.android.bakingapp.util.ui.BundleUtils;
+import com.example.android.bakingapp.util.converter.Converter;
 import com.example.android.bakingapp.util.ui.ResourceUtils;
 import com.example.android.bakingapp.viewmodel.RecipeViewModel;
 
@@ -49,7 +49,7 @@ public class RecipeActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState != null) {
-            recipes = BundleUtils.getParcelableArrayList(savedInstanceState);
+            recipes = savedInstanceState.getParcelableArrayList(null);
             setAdapter(binding);
             return;
         }
@@ -76,7 +76,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        BundleUtils.putParcelableList(outState, recipes);
+        outState.putParcelableArrayList(null, Converter.toArrayList(recipes));
         super.onSaveInstanceState(outState);
     }
 

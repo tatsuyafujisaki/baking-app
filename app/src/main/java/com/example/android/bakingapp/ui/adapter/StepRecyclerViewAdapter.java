@@ -1,6 +1,7 @@
 package com.example.android.bakingapp.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,15 +16,17 @@ import com.example.android.bakingapp.databinding.StepRecyclerViewItemBinding;
 import com.example.android.bakingapp.room.Step;
 import com.example.android.bakingapp.ui.activity.StepDetailActivity;
 import com.example.android.bakingapp.ui.fragment.StepDetailFragment;
+import com.example.android.bakingapp.util.converter.Converter;
+import com.example.android.bakingapp.util.ui.FragmentBuilder;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
-import com.example.android.bakingapp.util.ui.IntentUtils;
+import com.example.android.bakingapp.util.ui.IntentBuilder;
 import com.example.android.bakingapp.util.ui.ResourceUtils;
 
 import java.util.List;
 
 public final class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
-    private final FragmentManager fragmentManager;
     private final List<Step> steps;
+    private final FragmentManager fragmentManager;
 
     public StepRecyclerViewAdapter(FragmentManager fragmentManager, List<Step> steps) {
         this.fragmentManager = fragmentManager;
@@ -57,15 +60,22 @@ public final class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecy
 
         @Override
         public void onClick(View v) {
-            Step step = steps.get(getAdapterPosition());
-
             if (ResourceUtils.isTablet(v.getResources())) {
-                Fragment fragment = new StepDetailFragment();
-                FragmentUtils.setArguments(fragment, step);
-                FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_placer_holder, fragment);
+                Fragment fragment  = new FragmentBuilder(new StepDetailFragment())
+                        .putParcelableArrayList(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, Converter.toArrayList(steps))
+                        .putInt(StepDetailFragment.STEP_INTDEX_INT_EXTRA_KEY, getAdapterPosition())
+                        .build();
+
+                FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_container, fragment);
             } else {
                 Context context = v.getContext();
-                context.startActivity(IntentUtils.createIntent(context, StepDetailActivity.class, step));
+
+                Intent intent = new IntentBuilder(context, StepDetailActivity.class)
+                    .putParcelableArrayListExtra(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, steps)
+                    .putExtra(StepDetailFragment.STEP_INTDEX_INT_EXTRA_KEY, getAdapterPosition())
+                    .build();
+
+                context.startActivity(intent);
             }
         }
     }

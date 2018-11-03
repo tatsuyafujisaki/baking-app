@@ -11,7 +11,7 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.RecipeRecyclerViewItemBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.activity.RecipeDetailActivity;
-import com.example.android.bakingapp.util.ui.IntentUtils;
+import com.example.android.bakingapp.util.ui.IntentBuilder;
 
 import java.util.List;
 
@@ -52,10 +52,9 @@ public final class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<Recipe
         @Override
         public void onClick(View v) {
             Context context = v.getContext();
-
-            Recipe recipe = recipes.get(getAdapterPosition());
-
-            context.startActivity(IntentUtils.createIntent(context, RecipeDetailActivity.class, recipe));
+            context.startActivity(new IntentBuilder(context, RecipeDetailActivity.class)
+                                        .putParcelable(null, recipes.get(getAdapterPosition()))
+                                        .build());
         }
     }
 }

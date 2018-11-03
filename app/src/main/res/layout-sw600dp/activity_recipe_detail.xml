@@ -20,7 +20,7 @@
         app:layout_constraintGuide_percent="@dimen/activity_detail_guide_percent" />
 
     <FrameLayout
-        android:id="@+id/step_detail_fragment_placer_holder"
+        android:id="@+id/step_detail_fragment_container"
         android:name="com.example.android.bakingapp.ui.fragment.StepDetailFragment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

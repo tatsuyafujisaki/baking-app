@@ -27,10 +27,10 @@ public class RecipeDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentRecipeDetailBinding binding = FragmentRecipeDetailBinding.inflate(inflater, container, false);
 
-        Recipe recipe = IntentUtils.getParcelableExtra(this);
+        Recipe recipe = IntentUtils.getParcelableExtra(this, null);
 
         binding.ingredientRecyclerView.setAdapter(new IngredientRecyclerViewAdapter(recipe.ingredients));
-        binding.stepRecyclerView.setAdapter(new StepRecyclerViewAdapter(getActivity().getSupportFragmentManager(), recipe.steps));
+        binding.stepRecyclerView.setAdapter(new StepRecyclerViewAdapter(getFragmentManager(), recipe.steps));
 
         return binding.getRoot();
     }

@@ -1,25 +1,30 @@
 package com.example.android.bakingapp.util.ui;
 
-import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public final class FragmentUtils {
-    private static final String KEY = null;
-
-    public static <T extends Parcelable> T getArguments(Fragment fragment) {
-        Bundle arguments = fragment.getArguments();
-        return arguments != null ? arguments.getParcelable(KEY) : null;
+    public static boolean hasArguments(Fragment fragment) {
+        return fragment.getArguments() != null;
     }
 
-    public static void setArguments(Fragment fragment, Parcelable parcelable) {
-        Bundle arguments = new Bundle();
-        arguments.putParcelable(KEY, parcelable);
-        fragment.setArguments(arguments);
+    public static int getInt(Fragment fragment, String key) {
+        return Objects.requireNonNull(fragment.getArguments()).getInt(key);
     }
 
-    // This does not work with static fragments
+    public static <T extends Parcelable> T getParcelable(Fragment fragment, String key) {
+        return Objects.requireNonNull(fragment.getArguments()).getParcelable(key);
+    }
+
+    public static <T extends Parcelable> ArrayList<T> getParcelableArrayList(Fragment fragment, String key) {
+        return Objects.requireNonNull(fragment.getArguments()).getParcelableArrayList(key);
+    }
+
+    // This works only with dynamic fragments
     public static void replace(FragmentManager fragmentManager, int frameLayoutId, Fragment fragment) {
         fragmentManager.beginTransaction().replace(frameLayoutId, fragment).commit();
     }
