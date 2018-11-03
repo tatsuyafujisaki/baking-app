@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <style name="default_layout">
@@ -21,11 +22,6 @@
 
     <style name="scroll_view" parent="match_parents">
         <item name="android:fillViewport">true</item>
-    </style>
-
-    <style name="guideline" parent="wrap_contents">
-        <item name="android:showDividers">middle</item>
-        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="recycler_view" parent="default_layout">
