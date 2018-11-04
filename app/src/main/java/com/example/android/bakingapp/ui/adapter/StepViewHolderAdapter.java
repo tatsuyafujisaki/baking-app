@@ -12,7 +12,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.databinding.StepRecyclerViewItemBinding;
+import com.example.android.bakingapp.databinding.StepViewHolderBinding;
 import com.example.android.bakingapp.room.Step;
 import com.example.android.bakingapp.ui.activity.StepDetailActivity;
 import com.example.android.bakingapp.ui.fragment.StepDetailFragment;
@@ -24,11 +24,11 @@ import com.example.android.bakingapp.util.ui.ResourceUtils;
 
 import java.util.List;
 
-public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
+public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAdapter.ViewHolder> {
     private final List<Step> steps;
     private final FragmentManager fragmentManager;
 
-    public StepRecyclerViewAdapter(FragmentManager fragmentManager, List<Step> steps) {
+    public StepViewHolderAdapter(FragmentManager fragmentManager, List<Step> steps) {
         this.fragmentManager = fragmentManager;
         this.steps = steps;
     }
@@ -36,7 +36,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(StepRecyclerViewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(StepViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -51,9 +51,9 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
-        final StepRecyclerViewItemBinding binding;
+        final StepViewHolderBinding binding;
 
-        ViewHolder(StepRecyclerViewItemBinding binding) {
+        ViewHolder(StepViewHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);
@@ -62,7 +62,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         @Override
         public void onClick(View v) {
             if (ResourceUtils.isTablet(v.getResources())) {
-                Fragment fragment  = new FragmentBuilder(new StepDetailFragment())
+                Fragment fragment = new FragmentBuilder(new StepDetailFragment())
                         .putParcelableArrayList(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, Converter.toArrayList(steps))
                         .putInt(StepDetailFragment.STEP_INTDEX_INT_EXTRA_KEY, getAdapterPosition())
                         .build();
@@ -72,9 +72,9 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
                 Context context = v.getContext();
 
                 Intent intent = new IntentBuilder(context, StepDetailActivity.class)
-                    .putParcelableArrayListExtra(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, steps)
-                    .putExtra(StepDetailFragment.STEP_INTDEX_INT_EXTRA_KEY, getAdapterPosition())
-                    .build();
+                        .putParcelableArrayListExtra(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, steps)
+                        .putExtra(StepDetailFragment.STEP_INTDEX_INT_EXTRA_KEY, getAdapterPosition())
+                        .build();
 
                 context.startActivity(intent);
             }

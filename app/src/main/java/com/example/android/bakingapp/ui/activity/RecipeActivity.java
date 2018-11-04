@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.ActivityRecipeBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
-import com.example.android.bakingapp.ui.adapter.RecipeRecyclerViewAdapter;
+import com.example.android.bakingapp.ui.adapter.RecipeViewHolderAdapter;
 import com.example.android.bakingapp.util.ApiResponse;
 import com.example.android.bakingapp.util.NetworkUtils;
 import com.example.android.bakingapp.util.converter.Converter;
@@ -81,7 +81,7 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     private void setAdapter(ActivityRecipeBinding binding){
-        binding.recyclerView.setAdapter(new RecipeRecyclerViewAdapter(recipes));
+        binding.recyclerView.setAdapter(new RecipeViewHolderAdapter(recipes));
     }
 
     private void showToast(String text) {

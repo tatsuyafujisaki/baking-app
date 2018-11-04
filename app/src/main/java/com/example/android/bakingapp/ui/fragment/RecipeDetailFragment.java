@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.android.bakingapp.databinding.FragmentRecipeDetailBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
-import com.example.android.bakingapp.ui.adapter.IngredientRecyclerViewAdapter;
-import com.example.android.bakingapp.ui.adapter.StepRecyclerViewAdapter;
+import com.example.android.bakingapp.ui.adapter.IngredientViewHolderAdapter;
+import com.example.android.bakingapp.ui.adapter.StepViewHolderAdapter;
 import com.example.android.bakingapp.util.ui.IntentUtils;
 
 import dagger.android.support.AndroidSupportInjection;
@@ -29,8 +29,8 @@ public class RecipeDetailFragment extends Fragment {
 
         Recipe recipe = IntentUtils.getParcelableExtra(this, null);
 
-        binding.ingredientRecyclerView.setAdapter(new IngredientRecyclerViewAdapter(recipe.ingredients));
-        binding.stepRecyclerView.setAdapter(new StepRecyclerViewAdapter(getFragmentManager(), recipe.steps));
+        binding.ingredientRecyclerView.setAdapter(new IngredientViewHolderAdapter(recipe.ingredients));
+        binding.stepRecyclerView.setAdapter(new StepViewHolderAdapter(getFragmentManager(), recipe.steps));
 
         return binding.getRoot();
     }

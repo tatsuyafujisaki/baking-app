@@ -8,24 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.databinding.RecipeRecyclerViewItemBinding;
+import com.example.android.bakingapp.databinding.RecipeViewHolderBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.activity.RecipeDetailActivity;
 import com.example.android.bakingapp.util.ui.IntentBuilder;
 
 import java.util.List;
 
-public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
+public class RecipeViewHolderAdapter extends RecyclerView.Adapter<RecipeViewHolderAdapter.ViewHolder> {
     private final List<Recipe> recipes;
 
-    public RecipeRecyclerViewAdapter(List<Recipe> recipes) {
+    public RecipeViewHolderAdapter(List<Recipe> recipes) {
         this.recipes = recipes;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(RecipeRecyclerViewItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(RecipeViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -42,9 +42,9 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final RecipeRecyclerViewItemBinding binding;
+        final RecipeViewHolderBinding binding;
 
-        ViewHolder(RecipeRecyclerViewItemBinding binding) {
+        ViewHolder(RecipeViewHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
             binding.getRoot().setOnClickListener(this);
