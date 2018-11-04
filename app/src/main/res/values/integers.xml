@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="recipe_grid_column_width">400</integer>
+    <integer name="grid_column_span">400</integer>
 </resources>

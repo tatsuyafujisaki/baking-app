@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -40,8 +39,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApplicationModule {
     @Singleton
     @Provides
-    static ViewModel provideViewModel(FragmentActivity activity, Class<RecipeViewModel> modelClass, ViewModelProvider.Factory factory) {
-        return ViewModelProviders.of(activity, factory).get(modelClass);
+    static Executor provideExecutor() {
+        return Executors.newSingleThreadExecutor();
     }
 
     @Singleton
@@ -58,12 +57,6 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    static Executor provideExecutor() {
-        return Executors.newSingleThreadExecutor();
-    }
-
-    @Singleton
-    @Provides
     static RecipeDatabase provideRecipeDatabase(Context context) {
         return RecipeDatabase.getInstance(context);
     }
@@ -76,6 +69,18 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
+    static ViewModel provideViewModel(FragmentActivity activity, Class<RecipeViewModel> modelClass, ViewModelProvider.Factory factory) {
+        return ViewModelProviders.of(activity, factory).get(modelClass);
+    }
+
+    @Singleton
+    @Provides
+    static String provideUserAgent(Context context) {
+        return WebSettings.getDefaultUserAgent(context);
+    }
+
+    @Singleton
+    @Provides
     static Gson provideGson() {
         return new GsonBuilder().registerTypeAdapter(new TypeToken<List<Recipe>>() {
         }.getType(), (JsonDeserializer<List<Recipe>>) (json, type, context1)
@@ -84,23 +89,10 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    @Named("RecipesBaseUrl")
-    static String provideRecipesBaseUrl(Context context) {
-        return context.getString(R.string.recipes_base_url);
-    }
+    static RecipeService provideRecipeService(Context context, Gson gson) {
 
-    @Singleton
-    @Provides
-    @Named("UserAgent")
-    static String provideUserAgent(Context context) {
-        return WebSettings.getDefaultUserAgent(context);
-    }
-
-    @Singleton
-    @Provides
-    static RecipeService provideRecipeService(Gson gson, @Named("RecipesBaseUrl") String recipesBaseUrl) {
         return new Retrofit.Builder()
-                .baseUrl(recipesBaseUrl)
+                .baseUrl(context.getString(R.string.recipes_base_url))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(RecipeService.class);
@@ -114,7 +106,7 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    static DefaultHttpDataSourceFactory provideDefaultHttpDataSourceFactory(@Named("UserAgent") String userAgent) {
+    static DefaultHttpDataSourceFactory provideDefaultHttpDataSourceFactory(String userAgent) {
         return new DefaultHttpDataSourceFactory(userAgent);
     }
 
@@ -126,13 +118,13 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    static boolean provideBoolean(Resources resources) {
+    static boolean provideIsTablet(Resources resources) {
         return resources.getBoolean(R.bool.is_tablet);
     }
 
     @Singleton
     @Provides
-    static int provideInt(Resources resources) {
-        return Math.max(1, resources.getDisplayMetrics().widthPixels / resources.getInteger(R.integer.recipe_grid_column_width));
+    static int provideGridColumnSpan(Resources resources) {
+        return Math.max(1, resources.getDisplayMetrics().widthPixels / resources.getInteger(R.integer.grid_column_span));
     }
 }
