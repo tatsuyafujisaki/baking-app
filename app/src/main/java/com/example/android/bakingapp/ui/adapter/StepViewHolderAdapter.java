@@ -20,17 +20,18 @@ import com.example.android.bakingapp.util.converter.Converter;
 import com.example.android.bakingapp.util.ui.FragmentBuilder;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
 import com.example.android.bakingapp.util.ui.IntentBuilder;
-import com.example.android.bakingapp.util.ui.ResourceUtils;
 
 import java.util.List;
 
 public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAdapter.ViewHolder> {
-    private final List<Step> steps;
     private final FragmentManager fragmentManager;
+    private final List<Step> steps;
+    private final boolean isTablet;
 
-    public StepViewHolderAdapter(FragmentManager fragmentManager, List<Step> steps) {
+    public StepViewHolderAdapter(FragmentManager fragmentManager, List<Step> steps, boolean isTablet) {
         this.fragmentManager = fragmentManager;
         this.steps = steps;
+        this.isTablet = isTablet;
     }
 
     @NonNull
@@ -61,10 +62,10 @@ public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAd
 
         @Override
         public void onClick(View v) {
-            if (ResourceUtils.isTablet(v.getResources())) {
+            if (isTablet) {
                 Fragment fragment = new FragmentBuilder(new StepDetailFragment())
                         .putParcelableArrayList(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, Converter.toArrayList(steps))
-                        .putInt(StepDetailFragment.STEP_INTDEX_INT_EXTRA_KEY, getAdapterPosition())
+                        .putInt(StepDetailFragment.STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
                         .build();
 
                 FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_container, fragment);
@@ -73,7 +74,7 @@ public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAd
 
                 Intent intent = new IntentBuilder(context, StepDetailActivity.class)
                         .putParcelableArrayListExtra(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, steps)
-                        .putExtra(StepDetailFragment.STEP_INTDEX_INT_EXTRA_KEY, getAdapterPosition())
+                        .putExtra(StepDetailFragment.STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
                         .build();
 
                 context.startActivity(intent);

@@ -14,9 +14,16 @@ import com.example.android.bakingapp.ui.adapter.IngredientViewHolderAdapter;
 import com.example.android.bakingapp.ui.adapter.StepViewHolderAdapter;
 import com.example.android.bakingapp.util.ui.IntentUtils;
 
+import javax.inject.Inject;
+
 import dagger.android.support.AndroidSupportInjection;
 
 public class RecipeDetailFragment extends Fragment {
+    public static final String RECIPE_PARCELABLE_EXTRA_KEY = "STEP_INDEX";
+
+    @Inject
+    boolean isTablet;
+
     @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
@@ -27,10 +34,10 @@ public class RecipeDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentRecipeDetailBinding binding = FragmentRecipeDetailBinding.inflate(inflater, container, false);
 
-        Recipe recipe = IntentUtils.getParcelableExtra(this, null);
+        Recipe recipe = IntentUtils.getParcelableExtra(this, RECIPE_PARCELABLE_EXTRA_KEY);
 
         binding.ingredientRecyclerView.setAdapter(new IngredientViewHolderAdapter(recipe.ingredients));
-        binding.stepRecyclerView.setAdapter(new StepViewHolderAdapter(getFragmentManager(), recipe.steps));
+        binding.stepRecyclerView.setAdapter(new StepViewHolderAdapter(getFragmentManager(), recipe.steps, isTablet));
 
         return binding.getRoot();
     }

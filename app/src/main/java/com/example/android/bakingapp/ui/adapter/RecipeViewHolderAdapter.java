@@ -15,6 +15,8 @@ import com.example.android.bakingapp.util.ui.IntentBuilder;
 
 import java.util.List;
 
+import static com.example.android.bakingapp.ui.fragment.RecipeDetailFragment.RECIPE_PARCELABLE_EXTRA_KEY;
+
 public class RecipeViewHolderAdapter extends RecyclerView.Adapter<RecipeViewHolderAdapter.ViewHolder> {
     private final List<Recipe> recipes;
 
@@ -54,8 +56,8 @@ public class RecipeViewHolderAdapter extends RecyclerView.Adapter<RecipeViewHold
         public void onClick(View v) {
             Context context = v.getContext();
             context.startActivity(new IntentBuilder(context, RecipeDetailActivity.class)
-                                        .putParcelable(null, recipes.get(getAdapterPosition()))
-                                        .build());
+                    .putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipes.get(getAdapterPosition()))
+                    .build());
         }
     }
 }

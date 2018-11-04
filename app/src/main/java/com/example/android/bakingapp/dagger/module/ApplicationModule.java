@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.webkit.WebSettings;
 
@@ -47,6 +48,12 @@ public class ApplicationModule {
     @Provides
     static Context provideContext(Application application) {
         return application.getApplicationContext();
+    }
+
+    @Singleton
+    @Provides
+    static Resources provideResources(Context context) {
+        return context.getResources();
     }
 
     @Singleton
@@ -115,5 +122,17 @@ public class ApplicationModule {
     @Provides
     static Factory provideFactory(DefaultHttpDataSourceFactory defaultHttpDataSourceFactory) {
         return new ExtractorMediaSource.Factory(defaultHttpDataSourceFactory);
+    }
+
+    @Singleton
+    @Provides
+    static boolean provideBoolean(Resources resources) {
+        return resources.getBoolean(R.bool.is_tablet);
+    }
+
+    @Singleton
+    @Provides
+    static int provideInt(Resources resources) {
+        return Math.max(1, resources.getDisplayMetrics().widthPixels / resources.getInteger(R.integer.recipe_grid_column_width));
     }
 }

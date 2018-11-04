@@ -15,7 +15,6 @@ import com.example.android.bakingapp.ui.adapter.RecipeViewHolderAdapter;
 import com.example.android.bakingapp.util.ApiResponse;
 import com.example.android.bakingapp.util.NetworkUtils;
 import com.example.android.bakingapp.util.converter.Converter;
-import com.example.android.bakingapp.util.ui.ResourceUtils;
 import com.example.android.bakingapp.viewmodel.RecipeViewModel;
 
 import java.util.List;
@@ -26,6 +25,12 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 
 public class RecipeActivity extends AppCompatActivity {
+    @Inject
+    boolean isTablet;
+
+    @Inject
+    int gridColumnSpan;
+
     @Inject
     RecipeViewModel recipeViewModel;
 
@@ -43,9 +48,8 @@ public class RecipeActivity extends AppCompatActivity {
             return;
         }
 
-        if(ResourceUtils.isTablet(getResources())) {
-            ((GridLayoutManager) Objects.requireNonNull(binding.recyclerView.getLayoutManager()))
-                    .setSpanCount(ResourceUtils.getGridColumnSpan(getResources(), R.integer.recipe_grid_column_width));
+        if (isTablet) {
+            ((GridLayoutManager) Objects.requireNonNull(binding.recyclerView.getLayoutManager())).setSpanCount(gridColumnSpan);
         }
 
         if (savedInstanceState != null) {
@@ -80,7 +84,7 @@ public class RecipeActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-    private void setAdapter(ActivityRecipeBinding binding){
+    private void setAdapter(ActivityRecipeBinding binding) {
         binding.recyclerView.setAdapter(new RecipeViewHolderAdapter(recipes));
     }
 

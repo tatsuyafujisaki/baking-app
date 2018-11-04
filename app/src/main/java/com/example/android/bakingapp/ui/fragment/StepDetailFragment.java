@@ -30,7 +30,7 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class StepDetailFragment extends Fragment implements Player.EventListener {
     public static final String STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY = "STEPS";
-    public static final String STEP_INTDEX_INT_EXTRA_KEY = "STEP_INDEX";
+    public static final String STEP_INDEX_INT_EXTRA_KEY = "STEP_INDEX";
     private static final String PLAY_WHEN_READY_BOOL_EXTRA_KEY = "PLAY_WHEN_READY";
     private static final String CURRENT_POSITION_LONG_EXTRA_KEY = "CURRENT_POSITION";
 
@@ -56,18 +56,18 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             steps = FragmentUtils.getParcelableArrayList(this, STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY);
 
             if (savedInstanceState == null) {
-                stepIndex = FragmentUtils.getInt(this, STEP_INTDEX_INT_EXTRA_KEY);
+                stepIndex = FragmentUtils.getInt(this, STEP_INDEX_INT_EXTRA_KEY);
             }
         } else {
             steps = IntentUtils.getParcelableArrayListExtra(this, STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY);
 
             if (savedInstanceState == null) {
-                stepIndex = IntentUtils.getIntExtra(this, STEP_INTDEX_INT_EXTRA_KEY);
+                stepIndex = IntentUtils.getIntExtra(this, STEP_INDEX_INT_EXTRA_KEY);
             }
         }
 
         if (savedInstanceState != null) {
-            stepIndex = savedInstanceState.getInt(STEP_INTDEX_INT_EXTRA_KEY);
+            stepIndex = savedInstanceState.getInt(STEP_INDEX_INT_EXTRA_KEY);
 
             if (savedInstanceState.containsKey(PLAY_WHEN_READY_BOOL_EXTRA_KEY)) {
                 playWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY_BOOL_EXTRA_KEY);
@@ -177,7 +177,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(STEP_INTDEX_INT_EXTRA_KEY, stepIndex);
+        outState.putInt(STEP_INDEX_INT_EXTRA_KEY, stepIndex);
 
         SimpleExoPlayer player = (SimpleExoPlayer) binding.playerView.getPlayer();
 
