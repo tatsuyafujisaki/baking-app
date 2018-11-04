@@ -17,6 +17,7 @@ import com.example.android.bakingapp.room.Step;
 import com.example.android.bakingapp.util.ListUtils;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
 import com.example.android.bakingapp.util.ui.IntentUtils;
+import com.example.android.bakingapp.util.ui.ViewUtils;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -36,6 +37,10 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
 
     @Inject
     ExtractorMediaSource.Factory factory;
+
+    @Inject
+    boolean isTablet;
+
     private FragmentStepDetailBinding binding;
     private List<Step> steps;
     private int stepIndex;
@@ -78,31 +83,36 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             }
         }
 
-        setBottomNavigationView();
         binding.stepDescriptionTextView.setText(steps.get(stepIndex).description);
 
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.previous_step:
-                    stepIndex--;
-                    break;
-                case R.id.next_step:
-                    stepIndex++;
-                    break;
-                default:
-                    throw new IllegalArgumentException();
-            }
-
+        if (isTablet) {
+            ViewUtils.remove(binding.bottomNavigationView);
+        } else {
             setBottomNavigationView();
-            binding.stepDescriptionTextView.setText(steps.get(stepIndex).description);
 
-            playWhenReady = true;
-            currentPosition = 0;
+            binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.previous_step:
+                        stepIndex--;
+                        break;
+                    case R.id.next_step:
+                        stepIndex++;
+                        break;
+                    default:
+                        throw new IllegalArgumentException();
+                }
 
-            initializePlayer();
+                setBottomNavigationView();
+                binding.stepDescriptionTextView.setText(steps.get(stepIndex).description);
 
-            return true;
-        });
+                playWhenReady = true;
+                currentPosition = 0;
+
+                initializePlayer();
+
+                return true;
+            });
+        }
 
         return binding.getRoot();
     }
