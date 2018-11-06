@@ -59,25 +59,22 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
 
         if (FragmentUtils.hasArguments(this)) {
             steps = FragmentUtils.getParcelableArrayList(this, STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY);
-
-            if (savedInstanceState == null) {
-                stepIndex = FragmentUtils.getInt(this, STEP_INDEX_INT_EXTRA_KEY);
-            }
+            stepIndex = FragmentUtils.getInt(this, STEP_INDEX_INT_EXTRA_KEY);
         } else {
             steps = IntentUtils.getParcelableArrayListExtra(this, STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY);
-
-            if (savedInstanceState == null) {
-                stepIndex = IntentUtils.getIntExtra(this, STEP_INDEX_INT_EXTRA_KEY);
-            }
+            stepIndex = IntentUtils.getIntExtra(this, STEP_INDEX_INT_EXTRA_KEY);
         }
 
+        // savedInstanceState is not null if onCreateView() is being called due to device rotation.
         if (savedInstanceState != null) {
             stepIndex = savedInstanceState.getInt(STEP_INDEX_INT_EXTRA_KEY);
 
+            // savedInstanceState does not contain PLAY_WHEN_READY_BOOL_EXTRA_KEY if the current step of a recipe has no video.
             if (savedInstanceState.containsKey(PLAY_WHEN_READY_BOOL_EXTRA_KEY)) {
                 playWhenReady = savedInstanceState.getBoolean(PLAY_WHEN_READY_BOOL_EXTRA_KEY);
             }
 
+            // savedInstanceState does not contain CURRENT_POSITION_LONG_EXTRA_KEY if the current step of a recipe has no video.
             if (savedInstanceState.containsKey(CURRENT_POSITION_LONG_EXTRA_KEY)) {
                 currentPosition = savedInstanceState.getLong(CURRENT_POSITION_LONG_EXTRA_KEY);
             }
@@ -88,7 +85,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         if (isTablet) {
             ViewUtils.remove(binding.bottomNavigationView);
         } else {
-            setBottomNavigationView();
+            initializeBottomNavigationView();
 
             binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
                 switch (item.getItemId()) {
@@ -102,11 +99,9 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                         throw new IllegalArgumentException();
                 }
 
-                setBottomNavigationView();
-                binding.stepDescriptionTextView.setText(steps.get(stepIndex).description);
 
-                playWhenReady = true;
-                currentPosition = 0;
+                initializeBottomNavigationView();
+                binding.stepDescriptionTextView.setText(steps.get(stepIndex).description);
 
                 initializePlayer();
 
@@ -117,7 +112,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         return binding.getRoot();
     }
 
-    private void setBottomNavigationView() {
+    private void initializeBottomNavigationView() {
         Menu menu = binding.bottomNavigationView.getMenu();
         menu.findItem(R.id.previous_step).setVisible(stepIndex > 0);
         menu.findItem(R.id.next_step).setVisible(stepIndex < steps.size() - 1);
@@ -136,30 +131,27 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     }
 
     private void initializePlayer() {
+        SimpleExoPlayer player = (SimpleExoPlayer) binding.playerView.getPlayer();
+
+        // If a user navigates from an adjacent step, player is not null with the MediaSource of an adjacent step.
+        if(player != null) {
+            releasePlayer();
+        }
+
         String url = getVideoUrl();
 
         if (TextUtils.isEmpty(url)) {
-            releasePlayer();
             return;
         }
 
-        SimpleExoPlayer player = (SimpleExoPlayer) binding.playerView.getPlayer();
+        showProgressBar();
 
-        if (player == null) {
-            player = ExoPlayerFactory.newSimpleInstance(getContext());
-            player.addListener(this);
-            player.setPlayWhenReady(playWhenReady);
-            player.seekTo(currentPosition);
-            binding.playerView.setVisibility(View.INVISIBLE);
-            binding.playerView.setPlayer(player);
-            player.prepare(factory.createMediaSource(Uri.parse(url)), false, true);
-            return;
-        }
-
-        if (currentPosition > 0) {
-            player.setPlayWhenReady(playWhenReady);
-            player.seekTo(currentPosition);
-        }
+        player = ExoPlayerFactory.newSimpleInstance(getContext());
+        player.addListener(this);
+        player.setPlayWhenReady(playWhenReady);
+        player.seekTo(currentPosition);
+        player.prepare(factory.createMediaSource(Uri.parse(url)), false, true);
+        binding.playerView.setPlayer(player);
     }
 
     private void releasePlayer() {
@@ -170,7 +162,10 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             binding.playerView.setPlayer(null);
         }
 
-        binding.playerView.setVisibility(View.GONE);
+        playWhenReady = true;
+        currentPosition = 0;
+
+        collapseExoPlayer();
     }
 
     private String getVideoUrl() {
@@ -181,7 +176,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
         if (playbackState == Player.STATE_READY) {
-            binding.playerView.setVisibility(View.VISIBLE);
+            showExoPlayer();
         }
     }
 
@@ -191,11 +186,27 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
 
         SimpleExoPlayer player = (SimpleExoPlayer) binding.playerView.getPlayer();
 
+        // player does not exist if the current step of a recipe has no video.
         if (player != null) {
             outState.putBoolean(PLAY_WHEN_READY_BOOL_EXTRA_KEY, player.getPlayWhenReady());
             outState.putLong(CURRENT_POSITION_LONG_EXTRA_KEY, player.getCurrentPosition());
         }
 
         super.onSaveInstanceState(outState);
+    }
+
+    private void showProgressBar() {
+        binding.playerView.setVisibility(View.INVISIBLE);
+        binding.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void showExoPlayer() {
+        binding.progressBar.setVisibility(View.GONE);
+        binding.playerView.setVisibility(View.VISIBLE);
+    }
+
+    private void collapseExoPlayer() {
+        binding.progressBar.setVisibility(View.GONE);
+        binding.playerView.setVisibility(View.GONE);
     }
 }
