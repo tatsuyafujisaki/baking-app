@@ -35,11 +35,4 @@
     <style name="grid_recycler_view" parent="recycler_view">
         <item name="layoutManager">GridLayoutManager</item>
     </style>
-
-    <style name="card_view" parent="CardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/card_margin</item>
-        <item name="cardElevation">@dimen/card_elevation</item>
-    </style>
 </resources>
