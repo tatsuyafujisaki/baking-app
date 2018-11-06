@@ -11,9 +11,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/ingredients_card"
-                style="@style/card_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                style="@style/card_view">
 
                 <LinearLayout style="@style/linear_layout">
 
@@ -32,9 +30,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/steps_card"
-                style="@style/card_view"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                style="@style/card_view">
 
                 <LinearLayout style="@style/linear_layout">
 
