@@ -11,4 +11,5 @@
     <string name="steps_label">Steps</string>
     <string name="previous_step">Previous step</string>
     <string name="next_step">Next step</string>
+    <string name="step_format">%1$d. %2$s</string>
 </resources>

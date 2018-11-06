@@ -7,7 +7,7 @@
         <LinearLayout style="@style/linear_layout">
 
             <TextView
-                android:id="@+id/name_text_view"
+                android:id="@+id/recipe_text_view"
                 style="@style/default_layout"
                 android:textAppearance="?attr/textAppearanceListItem"
                 tools:text="@tools:sample/lorem" />

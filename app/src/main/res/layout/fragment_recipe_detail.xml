@@ -14,7 +14,7 @@
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/text_margin"
                 android:text="@string/ingredients_label" />
 
             <android.support.v7.widget.CardView style="@style/card_view">
@@ -31,13 +31,10 @@
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="@dimen/text_margin"
                 android:text="@string/steps_label" />
 
-            <android.support.v7.widget.CardView
-                style="@style/card_view"
-                android:layout_margin="16dp"
-                android:padding="16dp">
+            <android.support.v7.widget.CardView style="@style/card_view">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/step_recycler_view"

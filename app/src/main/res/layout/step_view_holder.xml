@@ -3,8 +3,14 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
-        android:id="@+id/name_text_view"
+        android:id="@+id/step_text_view"
+        style="?attr/textAppearanceListItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_small_margin"
+        android:layout_marginBottom="@dimen/text_small_margin"
+        android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginEnd="@dimen/text_margin"
+        android:textColor="?colorAccent"
         tools:text="@tools:sample/lorem" />
 </layout>

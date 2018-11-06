@@ -24,11 +24,13 @@ import com.example.android.bakingapp.util.ui.IntentBuilder;
 import java.util.List;
 
 public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAdapter.ViewHolder> {
+    private final Context context;
     private final FragmentManager fragmentManager;
     private final List<Step> steps;
     private final boolean isTablet;
 
-    public StepViewHolderAdapter(FragmentManager fragmentManager, List<Step> steps, boolean isTablet) {
+    public StepViewHolderAdapter(Context context, FragmentManager fragmentManager, List<Step> steps, boolean isTablet) {
+        this.context = context;
         this.fragmentManager = fragmentManager;
         this.steps = steps;
         this.isTablet = isTablet;
@@ -42,8 +44,7 @@ public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Step step = steps.get(position);
-        holder.binding.nameTextView.setText(step.shortDescription);
+        holder.binding.stepTextView.setText(context.getString(R.string.step_format, position + 1, steps.get(position).shortDescription));
     }
 
     @Override
@@ -70,8 +71,6 @@ public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAd
 
                 FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_container, fragment);
             } else {
-                Context context = v.getContext();
-
                 Intent intent = new IntentBuilder(context, StepDetailActivity.class)
                         .putParcelableArrayListExtra(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, steps)
                         .putExtra(StepDetailFragment.STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())

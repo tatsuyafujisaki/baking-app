@@ -41,6 +41,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     @Inject
     boolean isTablet;
 
+    private Context context;
     private FragmentStepDetailBinding binding;
     private List<Step> steps;
     private int stepIndex;
@@ -51,6 +52,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -99,7 +101,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                         throw new IllegalArgumentException();
                 }
 
-
                 initializeBottomNavigationView();
                 binding.stepDescriptionTextView.setText(steps.get(stepIndex).description);
 
@@ -134,7 +135,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         SimpleExoPlayer player = (SimpleExoPlayer) binding.playerView.getPlayer();
 
         // If a user navigates from an adjacent step, player is not null with the MediaSource of an adjacent step.
-        if(player != null) {
+        if (player != null) {
             releasePlayer();
         }
 
@@ -146,7 +147,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
 
         showProgressBar();
 
-        player = ExoPlayerFactory.newSimpleInstance(getContext());
+        player = ExoPlayerFactory.newSimpleInstance(context);
         player.addListener(this);
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentPosition);

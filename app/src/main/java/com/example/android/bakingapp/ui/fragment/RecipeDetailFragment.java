@@ -20,14 +20,15 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class RecipeDetailFragment extends Fragment {
     public static final String RECIPE_PARCELABLE_EXTRA_KEY = "STEP_INDEX";
-
     @Inject
     boolean isTablet;
+    private Context context;
 
     @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class RecipeDetailFragment extends Fragment {
         Recipe recipe = IntentUtils.getParcelableExtra(this, RECIPE_PARCELABLE_EXTRA_KEY);
 
         binding.ingredientRecyclerView.setAdapter(new IngredientViewHolderAdapter(recipe.ingredients));
-        binding.stepRecyclerView.setAdapter(new StepViewHolderAdapter(getFragmentManager(), recipe.steps, isTablet));
+        binding.stepRecyclerView.setAdapter(new StepViewHolderAdapter(context, getFragmentManager(), recipe.steps, isTablet));
 
         return binding.getRoot();
     }
