@@ -11,10 +11,9 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/ingredients_card"
-                style="@style/Widget.MaterialComponents.CardView"
+                style="@style/card_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/card_view_layout_margin">
+                android:layout_height="wrap_content">
 
                 <LinearLayout style="@style/linear_layout">
 
@@ -33,10 +32,9 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/steps_card"
-                style="@style/Widget.MaterialComponents.CardView"
+                style="@style/card_view"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_margin="@dimen/card_view_layout_margin">
+                android:layout_width="match_parent">
 
                 <LinearLayout style="@style/linear_layout">
 
