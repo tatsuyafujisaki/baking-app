@@ -2,6 +2,7 @@
 <resources>
     <dimen name="card_margin">8dp</dimen>
     <dimen name="card_padding">8dp</dimen>
+    <dimen name="text_big_margin">16dp</dimen>
     <dimen name="text_margin">8dp</dimen>
     <dimen name="text_small_margin">4dp</dimen>
 </resources>

@@ -142,6 +142,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         String url = getVideoUrl();
 
         if (TextUtils.isEmpty(url)) {
+            collapseExoPlayer();
             return;
         }
 
