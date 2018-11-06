@@ -24,6 +24,10 @@
         <item name="android:fillViewport">true</item>
     </style>
 
+    <style name="nested_scroll_view" parent="match_parents">
+        <item name="android:fillViewport">true</item>
+    </style>
+
     <style name="recycler_view" parent="default_layout">
         <item name="android:clipToPadding">false</item>
     </style>
@@ -39,7 +43,10 @@
     <style name="card_view" parent="CardView.Light">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">@dimen/card_margin</item>
+        <item name="android:layout_marginTop">@dimen/card_margin</item>
+        <item name="android:layout_marginBottom">@dimen/card_margin</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
         <item name="contentPadding">@dimen/card_padding</item>
     </style>
 </resources>

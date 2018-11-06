@@ -3,9 +3,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v4.widget.NestedScrollView
-        style="@style/match_parents"
-        android:fillViewport="true"
-        android:scrollbars="vertical">
+        style="@style/nested_scroll_view">
 
         <LinearLayout style="@style/linear_layout">
 
@@ -14,8 +12,8 @@
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/text_big_margin"
-                android:layout_marginTop="@dimen/text_small_margin"
+                android:layout_marginStart="@dimen/label_margin_start"
+                android:layout_marginTop="@dimen/text_margin"
                 android:layout_marginBottom="@dimen/text_small_margin"
                 android:text="@string/ingredients_label" />
 
@@ -33,7 +31,7 @@
                 style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/text_big_margin"
+                android:layout_marginStart="@dimen/label_margin_start"
                 android:layout_marginTop="@dimen/text_small_margin"
                 android:layout_marginBottom="@dimen/text_small_margin"
                 android:text="@string/steps_label" />

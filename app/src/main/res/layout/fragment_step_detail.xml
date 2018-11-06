@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/step_description_text_view"
-            style="@android:style/TextAppearance.Material.Body1"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_big_margin"

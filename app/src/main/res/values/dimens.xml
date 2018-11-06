@@ -5,4 +5,6 @@
     <dimen name="text_big_margin">16dp</dimen>
     <dimen name="text_margin">8dp</dimen>
     <dimen name="text_small_margin">4dp</dimen>
+    <dimen name="activity_recipe_margin_top">8dp</dimen>
+    <dimen name="label_margin_start">24dp</dimen>
 </resources>
