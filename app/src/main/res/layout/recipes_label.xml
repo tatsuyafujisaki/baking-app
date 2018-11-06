@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          style="@style/TextAppearance.MaterialComponents.Headline6"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/label_margin_start"
+          android:layout_marginTop="@dimen/text_margin"
+          android:layout_marginBottom="@dimen/text_small_margin"
+          android:text="@string/recipes_label" />

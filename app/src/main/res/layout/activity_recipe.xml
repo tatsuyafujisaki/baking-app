@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
-        style="@style/scroll_view"
-        android:layout_marginTop="@dimen/activity_recipe_margin_top">
+    <LinearLayout style="@style/linear_layout">
+
+        <include layout="@layout/recipes_label" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             style="@style/linear_recycler_view"
             tools:listitem="@layout/recipe_view_holder" />
-    </ScrollView>
+    </LinearLayout>
 </layout>

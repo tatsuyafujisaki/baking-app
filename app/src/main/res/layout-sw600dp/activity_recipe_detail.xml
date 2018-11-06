@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    style="@style/default_layout"
-    android:baselineAligned="false">
+              xmlns:tools="http://schemas.android.com/tools"
+              style="@style/default_layout"
+              android:baselineAligned="false">
 
     <fragment
         android:id="@+id/recipe_detail_fragment"
