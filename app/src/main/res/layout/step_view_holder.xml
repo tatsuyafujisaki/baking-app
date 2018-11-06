@@ -4,6 +4,7 @@
 
     <TextView
         android:id="@+id/name_text_view"
-        style="@style/default_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         tools:text="@tools:sample/lorem" />
 </layout>

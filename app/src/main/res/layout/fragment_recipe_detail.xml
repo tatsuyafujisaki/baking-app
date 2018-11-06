@@ -9,42 +9,41 @@
 
         <LinearLayout style="@style/linear_layout">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/ingredients_card"
-                style="@style/card_view">
+            <TextView
+                android:id="@+id/ingredients_label"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/ingredients_label" />
 
-                <LinearLayout style="@style/linear_layout">
+            <android.support.v7.widget.CardView style="@style/card_view">
 
-                    <TextView
-                        android:id="@+id/ingredients_label"
-                        style="@style/default_layout"
-                        android:text="@string/ingredients_label" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/ingredient_recycler_view"
-                        style="@style/linear_recycler_view"
-                        android:nestedScrollingEnabled="true"
-                        tools:listitem="@layout/ingredient_view_holder" />
-                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ingredient_recycler_view"
+                    style="@style/linear_recycler_view"
+                    android:nestedScrollingEnabled="true"
+                    tools:listitem="@layout/ingredient_view_holder" />
             </android.support.v7.widget.CardView>
 
+            <TextView
+                android:id="@+id/steps_label"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/steps_label" />
+
             <android.support.v7.widget.CardView
-                android:id="@+id/steps_card"
-                style="@style/card_view">
+                style="@style/card_view"
+                android:layout_margin="16dp"
+                android:padding="16dp">
 
-                <LinearLayout style="@style/linear_layout">
-
-                    <TextView
-                        android:id="@+id/steps_label"
-                        style="@style/default_layout"
-                        android:text="@string/steps_label" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/step_recycler_view"
-                        style="@style/linear_recycler_view"
-                        android:nestedScrollingEnabled="true"
-                        tools:listitem="@layout/step_view_holder" />
-                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/step_recycler_view"
+                    style="@style/linear_recycler_view"
+                    android:nestedScrollingEnabled="true"
+                    tools:listitem="@layout/step_view_holder" />
             </android.support.v7.widget.CardView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
