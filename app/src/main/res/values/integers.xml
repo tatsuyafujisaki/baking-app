@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="grid_column_span">400</integer>
+    <integer name="twenty_four_hours_in_milliseconds">86400000</integer>
 </resources>
