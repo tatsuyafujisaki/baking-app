@@ -27,12 +27,10 @@
         </activity>
         <activity
             android:name=".ui.activity.RecipeDetailActivity"
-            android:label="@string/recipe_detail_activity_label"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.activity.RecipeActivity" />
         <activity
             android:name=".ui.activity.StepDetailActivity"
-            android:label="@string/step_detail_activity_label"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.activity.RecipeDetailActivity" />
 

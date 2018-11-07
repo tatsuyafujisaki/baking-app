@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.FragmentStepDetailBinding;
 import com.example.android.bakingapp.room.Step;
+import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.util.ListUtils;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
 import com.example.android.bakingapp.util.ui.IntentUtils;
@@ -23,14 +24,12 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 
 public class StepDetailFragment extends Fragment implements Player.EventListener {
-    public static final String STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY = "STEPS";
+    public static final String RECIPE_PARCELABLE_EXTRA_KEY = "RECIPE";
     public static final String STEP_INDEX_INT_EXTRA_KEY = "STEP_INDEX";
     private static final String PLAY_WHEN_READY_BOOL_EXTRA_KEY = "PLAY_WHEN_READY";
     private static final String CURRENT_POSITION_LONG_EXTRA_KEY = "CURRENT_POSITION";
@@ -43,7 +42,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
 
     private Context context;
     private FragmentStepDetailBinding binding;
-    private List<Step> steps;
+    private Recipe recipe;
     private int stepIndex;
     private boolean playWhenReady = true;
     private long currentPosition;
@@ -59,13 +58,15 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentStepDetailBinding.inflate(inflater, container, false);
 
-        if (FragmentUtils.hasArguments(this)) {
-            steps = FragmentUtils.getParcelableArrayList(this, STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY);
+        if (isTablet) {
+            recipe = FragmentUtils.getParcelable(this, RECIPE_PARCELABLE_EXTRA_KEY);
             stepIndex = FragmentUtils.getInt(this, STEP_INDEX_INT_EXTRA_KEY);
         } else {
-            steps = IntentUtils.getParcelableArrayListExtra(this, STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY);
+            recipe = IntentUtils.getParcelableExtra(this, RECIPE_PARCELABLE_EXTRA_KEY);
             stepIndex = IntentUtils.getIntExtra(this, STEP_INDEX_INT_EXTRA_KEY);
         }
+
+        requireActivity().setTitle(recipe.name);
 
         // savedInstanceState is not null if onCreateView() is being called due to device rotation.
         if (savedInstanceState != null) {
@@ -82,7 +83,8 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             }
         }
 
-        binding.stepDescriptionTextView.setText(steps.get(stepIndex).description);
+        binding.stepDescriptionTextView.setText(recipe.steps.get(stepIndex).description);
+
 
         if (isTablet) {
             ViewUtils.remove(binding.bottomNavigationView);
@@ -102,7 +104,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                 }
 
                 initializeBottomNavigationView();
-                binding.stepDescriptionTextView.setText(steps.get(stepIndex).description);
+                binding.stepDescriptionTextView.setText(recipe.steps.get(stepIndex).description);
 
                 initializePlayer();
 
@@ -116,7 +118,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private void initializeBottomNavigationView() {
         Menu menu = binding.bottomNavigationView.getMenu();
         menu.findItem(R.id.previous_step).setVisible(stepIndex > 0);
-        menu.findItem(R.id.next_step).setVisible(stepIndex < steps.size() - 1);
+        menu.findItem(R.id.next_step).setVisible(stepIndex < recipe.steps.size() - 1);
     }
 
     @Override
@@ -171,7 +173,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     }
 
     private String getVideoUrl() {
-        Step step = steps.get(stepIndex);
+        Step step = recipe.steps.get(stepIndex);
         return ListUtils.coalesceString(step.videoURL, step.thumbnailURL);
     }
 

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 
-import java.util.ArrayList;
+import com.example.android.bakingapp.util.converter.Converter;
+
+import java.util.List;
 
 public class FragmentBuilder {
     private final Fragment fragment;
@@ -25,13 +27,18 @@ public class FragmentBuilder {
         return this;
     }
 
+    public FragmentBuilder putString(String key, String value) {
+        arguments.putString(key, value);
+        return this;
+    }
+
     public FragmentBuilder putParcelable(String key, Parcelable value) {
         arguments.putParcelable(key, value);
         return this;
     }
 
-    public FragmentBuilder putParcelableArrayList(String key, ArrayList<? extends Parcelable> value) {
-        arguments.putParcelableArrayList(key, value);
+    public FragmentBuilder putParcelableList(String key, List<? extends Parcelable> value) {
+        arguments.putParcelableArrayList(key, Converter.toArrayList(value));
         return this;
     }
 

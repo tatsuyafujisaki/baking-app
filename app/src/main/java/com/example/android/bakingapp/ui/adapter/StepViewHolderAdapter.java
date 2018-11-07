@@ -13,26 +13,26 @@ import android.view.ViewGroup;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.StepViewHolderBinding;
-import com.example.android.bakingapp.room.Step;
+import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.activity.StepDetailActivity;
 import com.example.android.bakingapp.ui.fragment.StepDetailFragment;
-import com.example.android.bakingapp.util.converter.Converter;
 import com.example.android.bakingapp.util.ui.FragmentBuilder;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
 import com.example.android.bakingapp.util.ui.IntentBuilder;
 
-import java.util.List;
+import static com.example.android.bakingapp.ui.fragment.StepDetailFragment.RECIPE_PARCELABLE_EXTRA_KEY;
+import static com.example.android.bakingapp.ui.fragment.StepDetailFragment.STEP_INDEX_INT_EXTRA_KEY;
 
 public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAdapter.ViewHolder> {
     private final Context context;
     private final FragmentManager fragmentManager;
-    private final List<Step> steps;
+    private final Recipe recipe;
     private final boolean isTablet;
 
-    public StepViewHolderAdapter(Context context, FragmentManager fragmentManager, List<Step> steps, boolean isTablet) {
+    public StepViewHolderAdapter(Context context, FragmentManager fragmentManager, Recipe recipe, boolean isTablet) {
         this.context = context;
         this.fragmentManager = fragmentManager;
-        this.steps = steps;
+        this.recipe = recipe;
         this.isTablet = isTablet;
     }
 
@@ -44,12 +44,12 @@ public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.stepTextView.setText(context.getString(R.string.step_format, position + 1, steps.get(position).shortDescription));
+        holder.binding.stepTextView.setText(context.getString(R.string.step_format, position + 1, recipe.steps.get(position).shortDescription));
     }
 
     @Override
     public int getItemCount() {
-        return steps.size();
+        return recipe.steps.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
@@ -65,15 +65,15 @@ public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAd
         public void onClick(View v) {
             if (isTablet) {
                 Fragment fragment = new FragmentBuilder(new StepDetailFragment())
-                        .putParcelableArrayList(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, Converter.toArrayList(steps))
-                        .putInt(StepDetailFragment.STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
+                        .putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipe)
+                        .putInt(STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
                         .build();
 
                 FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_container, fragment);
             } else {
                 Intent intent = new IntentBuilder(context, StepDetailActivity.class)
-                        .putParcelableArrayListExtra(StepDetailFragment.STEPS_PARCELABLE_ARRAY_LIST_EXTRA_KEY, steps)
-                        .putExtra(StepDetailFragment.STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
+                        .putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipe)
+                        .putInt(STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
                         .build();
 
                 context.startActivity(intent);

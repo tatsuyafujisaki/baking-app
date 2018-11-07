@@ -37,8 +37,10 @@ public class RecipeDetailFragment extends Fragment {
 
         Recipe recipe = IntentUtils.getParcelableExtra(this, RECIPE_PARCELABLE_EXTRA_KEY);
 
+        requireActivity().setTitle(recipe.name);
+
         binding.ingredientRecyclerView.setAdapter(new IngredientViewHolderAdapter(recipe.ingredients));
-        binding.stepRecyclerView.setAdapter(new StepViewHolderAdapter(context, getFragmentManager(), recipe.steps, isTablet));
+        binding.stepRecyclerView.setAdapter(new StepViewHolderAdapter(context, requireFragmentManager(), recipe, isTablet));
 
         return binding.getRoot();
     }

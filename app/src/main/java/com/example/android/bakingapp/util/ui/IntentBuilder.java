@@ -19,7 +19,12 @@ public class IntentBuilder {
         intent = new Intent(context, cls);
     }
 
-    public IntentBuilder putExtra(String key, int value) {
+    public IntentBuilder putInt(String key, int value) {
+        intent.putExtra(key, value);
+        return this;
+    }
+
+    public IntentBuilder putString(String key, String value) {
         intent.putExtra(key, value);
         return this;
     }
@@ -29,7 +34,7 @@ public class IntentBuilder {
         return this;
     }
 
-    public IntentBuilder putParcelableArrayListExtra(String key, List<? extends Parcelable> value) {
+    public IntentBuilder putParcelableListExtra(String key, List<? extends Parcelable> value) {
         intent.putParcelableArrayListExtra(key, Converter.toArrayList(value));
         return this;
     }
