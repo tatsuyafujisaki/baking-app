@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +28,7 @@ public class RecipeRepository {
     private String errorMessage;
     private long lastUpdate;
 
+    @Inject
     public RecipeRepository(RecipeService recipeService, RecipeDao recipeDao, Executor executor) {
         this.recipeService = recipeService;
         this.recipeDao = recipeDao;

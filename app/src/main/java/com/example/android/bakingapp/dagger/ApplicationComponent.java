@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.android.bakingapp.dagger.module.ActivityModule;
 import com.example.android.bakingapp.dagger.module.ApplicationModule;
 import com.example.android.bakingapp.dagger.module.FragmentModule;
+import com.example.android.bakingapp.dagger.module.ServiceModule;
 
 import javax.inject.Singleton;
 
@@ -14,7 +15,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 @Singleton
-@Component(modules = {AndroidSupportInjectionModule.class, ApplicationModule.class, ActivityModule.class, FragmentModule.class})
+@Component(modules = {AndroidSupportInjectionModule.class, ApplicationModule.class, ActivityModule.class, FragmentModule.class, ServiceModule.class})
 public interface ApplicationComponent extends AndroidInjector<MyApplication> {
     @Component.Builder
     interface Builder {

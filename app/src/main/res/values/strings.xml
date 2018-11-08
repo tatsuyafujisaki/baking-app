@@ -11,5 +11,4 @@
     <string name="next_step">Next step</string>
     <string name="step_format">%1$d. %2$s</string>
     <string name="recipes_label">Recipes</string>
-    <string name="app_widget_text">EXAMPLE</string>
 </resources>
