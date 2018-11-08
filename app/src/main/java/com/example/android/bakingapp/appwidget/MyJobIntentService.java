@@ -61,6 +61,9 @@ public class MyJobIntentService extends JobIntentService {
                         if (!Objects.requireNonNull(recipes).isEmpty()) {
                             RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.app_widget);
 
+                            Recipe recipe = recipes.get(0);
+
+                            remoteViews.setTextViewText(R.id.app_widget_recipe_name_text_view, recipe.name);
                             // notifyAppWidgetViewDataChanged(...) should be called after remoteViews.setRemoteAdapter(...)
                             remoteViews.setRemoteAdapter(R.id.app_widget_list_view, new Intent(this, MyRemoteViewsService.class));
                             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.app_widget_list_view);
@@ -68,7 +71,7 @@ public class MyJobIntentService extends JobIntentService {
                             final int requestCode = 0;
 
                             PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode,
-                                    new IntentBuilder(this, RecipeDetailActivity.class).putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipes.get(0)).build(), 0);
+                                    new IntentBuilder(this, RecipeDetailActivity.class).putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipe).build(), 0);
 
                             remoteViews.setOnClickPendingIntent(R.id.app_widget_recipe_name_text_view, pendingIntent);
                             remoteViews.setPendingIntentTemplate(R.id.app_widget_list_view, pendingIntent);

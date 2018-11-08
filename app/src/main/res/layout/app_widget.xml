@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="#FFFFFF"
               android:orientation="vertical">
 
     <TextView
         android:id="@+id/app_widget_recipe_name_text_view"
-        style="@style/default_layout"
-        android:text="@string/recipes_label"
-        android:textColor="#FF0000" />
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        tools:text="@tools:sample/lorem" />
 
     <ListView
         android:id="@+id/app_widget_list_view"

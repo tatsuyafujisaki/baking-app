@@ -3,7 +3,6 @@ package com.example.android.bakingapp.appwidget;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -67,10 +66,6 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
         remoteViews.setTextViewText(R.id.ingredient_text_view, ingredient.ingredient);
         remoteViews.setTextViewText(R.id.quantity_text_view, String.valueOf(ingredient.quantity));
         remoteViews.setTextViewText(R.id.measure_text_view, ingredient.measure);
-
-        remoteViews.setTextColor(R.id.ingredient_text_view, Color.RED);
-        remoteViews.setTextColor(R.id.quantity_text_view, Color.RED);
-        remoteViews.setTextColor(R.id.measure_text_view, Color.RED);
 
         Intent intent = new Intent();
 
