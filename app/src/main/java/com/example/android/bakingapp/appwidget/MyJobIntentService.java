@@ -14,6 +14,7 @@ import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.activity.RecipeDetailActivity;
 import com.example.android.bakingapp.util.ApiResponse;
 import com.example.android.bakingapp.util.ui.IntentBuilder;
+import com.example.android.bakingapp.util.ui.IntentUtils;
 import com.example.android.bakingapp.viewmodel.RecipeViewModel;
 
 import java.util.List;
@@ -26,12 +27,31 @@ import dagger.android.AndroidInjection;
 import static com.example.android.bakingapp.ui.fragment.RecipeDetailFragment.RECIPE_PARCELABLE_EXTRA_KEY;
 
 public class MyJobIntentService extends JobIntentService {
-    private static final String APPWIDGET_UPDATE = "android.appwidget.action.APPWIDGET_UPDATE";
+    private static final String UPDATE_APP_WIDGET = "UPDATE_APP_WIDGET";
+    private static final String NAVIGATE_TO_NEXT_RECIPE = "NAVIGATE_TO_NEXT_RECIPE";
+    private static final String RECIPE_ID_INT_EXTRA_KEY = "RECIPE_ID_INT_EXTRA_KEY";
+
     private static AppWidgetManager appWidgetManager;
     private static int[] appWidgetIds;
 
     @Inject
     RecipeViewModel recipeViewModel;
+
+    static void start(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        MyJobIntentService.appWidgetManager = appWidgetManager;
+        MyJobIntentService.appWidgetIds = appWidgetIds;
+
+        enqueueWork(context, MyJobIntentService.class, 0 /* jobId */,
+                new IntentBuilder(context, MyJobIntentService.class).setAction(UPDATE_APP_WIDGET).build());
+    }
+
+    static void start(Context context, int recipeId) {
+        enqueueWork(context, MyJobIntentService.class, 0 /* jobId */,
+                new IntentBuilder(context, MyJobIntentService.class)
+                        .setAction(NAVIGATE_TO_NEXT_RECIPE)
+                        .putInt(RECIPE_ID_INT_EXTRA_KEY, recipeId)
+                        .build());
+    }
 
     @Override
     public void onCreate() {
@@ -39,51 +59,58 @@ public class MyJobIntentService extends JobIntentService {
         super.onCreate();
     }
 
-    static void start(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        MyJobIntentService.appWidgetManager = appWidgetManager;
-        MyJobIntentService.appWidgetIds = appWidgetIds;
-
-        Intent intent = new Intent(context, MyJobIntentService.class);
-        intent.setAction(APPWIDGET_UPDATE);
-
-        int jobId = 0;
-        enqueueWork(context, MyJobIntentService.class, jobId, intent);
-    }
-
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
+        int recipeId;
+
         switch (Objects.requireNonNull(intent.getAction())) {
-            case APPWIDGET_UPDATE:
-                ApiResponse<LiveData<List<Recipe>>> response = recipeViewModel.getRecipes();
-
-                if (response.isSuccessful) {
-                    response.data.observeForever(recipes -> {
-                        if (!Objects.requireNonNull(recipes).isEmpty()) {
-                            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.app_widget);
-
-                            Recipe recipe = recipes.get(0);
-
-                            remoteViews.setTextViewText(R.id.app_widget_recipe_name_text_view, recipe.name);
-
-                            // notifyAppWidgetViewDataChanged(...) should be called after remoteViews.setRemoteAdapter(...)
-                            remoteViews.setRemoteAdapter(R.id.app_widget_list_view, new Intent(this, MyRemoteViewsService.class));
-                            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.app_widget_list_view);
-
-                            final int requestCode = 0;
-
-                            PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode,
-                                    new IntentBuilder(this, RecipeDetailActivity.class).putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipe).build(), 0);
-
-                            remoteViews.setOnClickPendingIntent(R.id.app_widget_recipe_name_text_view, pendingIntent);
-                            remoteViews.setPendingIntentTemplate(R.id.app_widget_list_view, pendingIntent);
-
-                            appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
-                        }
-                    });
-                }
+            case UPDATE_APP_WIDGET:
+                recipeId = 0;
+                break;
+            case NAVIGATE_TO_NEXT_RECIPE:
+                recipeId = IntentUtils.getIntExtra(intent, RECIPE_ID_INT_EXTRA_KEY);
                 break;
             default:
                 throw new IllegalStateException();
+        }
+
+        updateAppWidget(recipeId);
+    }
+
+    private void updateAppWidget(int recipeId) {
+        ApiResponse<LiveData<List<Recipe>>> response = recipeViewModel.getRecipes();
+
+        if (response.isSuccessful) {
+            response.data.observeForever(recipes -> {
+                if (!Objects.requireNonNull(recipes).isEmpty()) {
+                    RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.app_widget);
+
+                    Recipe recipe = recipes.get(recipeId);
+
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* requestCode */,
+                            new IntentBuilder(this, RecipeDetailActivity.class).putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipe).build(),
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    remoteViews.setTextViewText(R.id.recipe_name_text_view, recipe.name);
+                    remoteViews.setOnClickPendingIntent(R.id.recipe_name_text_view, pendingIntent);
+                    remoteViews.setPendingIntentTemplate(R.id.ingredients_list_view, pendingIntent);
+
+                    int nextRecipeId = (recipeId + 1) % recipes.size();
+
+                    remoteViews.setOnClickPendingIntent(R.id.next_recipe_image_view,
+                            PendingIntent.getBroadcast(this, 0 /* requestCode */,
+                                    new IntentBuilder(this, MyAppWidgetProvider.class).setAction(MyAppWidgetProvider.NAVIGATE_TO_NEXT_RECIPE).putInt(MyAppWidgetProvider.RECIPE_ID_INT_EXTRA_KEY, nextRecipeId).build(),
+                                    PendingIntent.FLAG_UPDATE_CURRENT));
+
+                    remoteViews.setRemoteAdapter(R.id.ingredients_list_view,
+                            new IntentBuilder(this, MyRemoteViewsService.class).putInt(MyRemoteViewsFactory.RECIPE_ID_INT_EXTRA_KEY, recipeId).build());
+
+                    // notifyAppWidgetViewDataChanged(...) should be called after remoteViews.setRemoteAdapter(...)
+                    appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_list_view);
+
+                    appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
+                }
+            });
         }
     }
 }

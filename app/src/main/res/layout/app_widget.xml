@@ -4,15 +4,27 @@
               style="@style/linear_layout"
               android:background="#FFFFFF">
 
-    <TextView
-        android:id="@+id/app_widget_recipe_name_text_view"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        tools:text="@tools:sample/lorem" />
+    <LinearLayout
+        style="@style/default_layout"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/recipe_name_text_view"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            tools:text="@tools:sample/lorem" />
+
+        <ImageView
+            android:id="@+id/next_recipe_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/app_widget_next_recipe"
+            android:src="@drawable/ic_fast_forward_24px" />
+    </LinearLayout>
 
     <ListView
-        android:id="@+id/app_widget_list_view"
+        android:id="@+id/ingredients_list_view"
         style="@style/default_layout" />
 </LinearLayout>

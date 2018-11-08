@@ -3,7 +3,6 @@ package com.example.android.bakingapp.appwidget;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -11,21 +10,24 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.room.Ingredient;
 import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.util.ApiResponse;
+import com.example.android.bakingapp.util.ui.IntentUtils;
 import com.example.android.bakingapp.viewmodel.RecipeViewModel;
 
 import java.util.List;
 import java.util.Objects;
 
 public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-    private final String TAG = MyRemoteViewsFactory.class.getSimpleName();
+    static final String RECIPE_ID_INT_EXTRA_KEY = "RECIPE_ID_INT_EXTRA_KEY";
 
     private final Context context;
     private final RecipeViewModel recipeViewModel;
     private Recipe recipe;
+    private int recipeId;
 
-    MyRemoteViewsFactory(Context context, RecipeViewModel recipeViewModel) {
+    MyRemoteViewsFactory(Context context, RecipeViewModel recipeViewModel, Intent intent) {
         this.context = context;
         this.recipeViewModel = recipeViewModel;
+        recipeId = IntentUtils.getIntExtra(intent, RECIPE_ID_INT_EXTRA_KEY);
     }
 
     // Called after AppWidgetManager.updateAppWidget(...)
@@ -41,11 +43,9 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
         if (response.isSuccessful) {
             response.data.observeForever(recipes -> {
                 if (!Objects.requireNonNull(recipes).isEmpty()) {
-                    recipe = recipes.get(0);
+                    recipe = recipes.get(recipeId);
                 }
             });
-        } else {
-            Log.e(TAG, response.errorMessage);
         }
     }
 
@@ -67,12 +67,11 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
         remoteViews.setTextViewText(R.id.quantity_text_view, String.valueOf(ingredient.quantity));
         remoteViews.setTextViewText(R.id.measure_text_view, ingredient.measure);
 
-        Intent intent = new Intent();
-
         /*
-         * Setting an empty Intent to setOnClickFillInIntent(...) looks unnecessary
+         * Setting an empty Intent to setOnClickFillInIntent(...) seems unnecessary
          * but required to fire a PendingIntent specified in remoteViews.setPendingIntentTemplate(...)
          */
+        Intent intent = new Intent();
         remoteViews.setOnClickFillInIntent(R.id.ingredient_text_view, intent);
         remoteViews.setOnClickFillInIntent(R.id.quantity_text_view, intent);
         remoteViews.setOnClickFillInIntent(R.id.measure_text_view, intent);

@@ -19,6 +19,11 @@ public class IntentBuilder {
         intent = new Intent(context, cls);
     }
 
+    public IntentBuilder setAction(String action) {
+        intent.setAction(action);
+        return this;
+    }
+
     public IntentBuilder putInt(String key, int value) {
         intent.putExtra(key, value);
         return this;
