@@ -64,6 +64,7 @@ public class MyJobIntentService extends JobIntentService {
                             Recipe recipe = recipes.get(0);
 
                             remoteViews.setTextViewText(R.id.app_widget_recipe_name_text_view, recipe.name);
+
                             // notifyAppWidgetViewDataChanged(...) should be called after remoteViews.setRemoteAdapter(...)
                             remoteViews.setRemoteAdapter(R.id.app_widget_list_view, new Intent(this, MyRemoteViewsService.class));
                             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.app_widget_list_view);
