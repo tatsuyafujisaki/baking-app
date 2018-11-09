@@ -1,8 +1,11 @@
 package com.example.android.bakingapp.appwidget;
 
+import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.LiveData;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -16,23 +19,27 @@ import com.example.android.bakingapp.viewmodel.RecipeViewModel;
 import java.util.List;
 import java.util.Objects;
 
-public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
+public class MyRemoteViewsFactory extends BroadcastReceiver implements RemoteViewsService.RemoteViewsFactory {
+    static final String SEND_RECIPE_ID = "com.example.android.bakingapp.appwidget.action.SEND_RECIPE_ID";
     static final String RECIPE_ID_INT_EXTRA_KEY = "RECIPE_ID_INT_EXTRA_KEY";
-
-    private final Context context;
-    private final RecipeViewModel recipeViewModel;
+    static final String APP_WIDGET_ID_INT_ARRAY_EXTRA_KEY = "APP_WIDGET_ID_INT_ARRAY_EXTRA_KEY";
+    private Context context;
+    private RecipeViewModel recipeViewModel;
     private Recipe recipe;
     private int recipeId;
 
-    MyRemoteViewsFactory(Context context, RecipeViewModel recipeViewModel, Intent intent) {
+    public MyRemoteViewsFactory() {
+    }
+
+    MyRemoteViewsFactory(Context context, RecipeViewModel recipeViewModel) {
         this.context = context;
         this.recipeViewModel = recipeViewModel;
-        recipeId = IntentUtils.getIntExtra(intent, RECIPE_ID_INT_EXTRA_KEY);
     }
 
     // Called after AppWidgetManager.updateAppWidget(...)
     @Override
     public void onCreate() {
+        context.registerReceiver(this, new IntentFilter(SEND_RECIPE_ID));
     }
 
     // Called after onCreate() as well as after AppWidgetManager.notifyAppWidgetViewDataChanged(...)
@@ -51,6 +58,7 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
 
     @Override
     public void onDestroy() {
+        context.unregisterReceiver(this);
     }
 
     @Override
@@ -97,5 +105,18 @@ public class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFacto
     @Override
     public boolean hasStableIds() {
         return true;
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        switch (Objects.requireNonNull(intent.getAction())) {
+            case SEND_RECIPE_ID:
+                recipeId = IntentUtils.getIntExtra(intent, RECIPE_ID_INT_EXTRA_KEY);
+                int[] appWidgetIds = IntentUtils.getIntArray(intent, APP_WIDGET_ID_INT_ARRAY_EXTRA_KEY);
+                AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_list_view);
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 }

@@ -25,6 +25,6 @@ public class MyRemoteViewsService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new MyRemoteViewsFactory(context, recipeViewModel, intent);
+        return new MyRemoteViewsFactory(context, recipeViewModel);
     }
 }

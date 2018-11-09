@@ -50,5 +50,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_info" />
         </receiver>
+
+        <receiver android:name=".appwidget.MyRemoteViewsFactory" />
     </application>
 </manifest>

@@ -12,7 +12,11 @@ public class IntentUtils {
     }
 
     public static int getIntExtra(Fragment fragment, String key) {
-        return getIntent(fragment).getIntExtra(key, Integer.MIN_VALUE);
+        return getIntExtra(getIntent(fragment), key);
+    }
+
+    public static int[] getIntArray(Intent intent, String key) {
+        return intent.getIntArrayExtra(key);
     }
 
     public static String getStringExtra(Fragment fragment, String key) {

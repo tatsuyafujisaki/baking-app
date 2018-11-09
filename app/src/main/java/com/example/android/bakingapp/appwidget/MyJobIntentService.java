@@ -95,18 +95,22 @@ public class MyJobIntentService extends JobIntentService {
                     remoteViews.setOnClickPendingIntent(R.id.recipe_name_text_view, pendingIntent);
                     remoteViews.setPendingIntentTemplate(R.id.ingredients_list_view, pendingIntent);
 
-                    int nextRecipeId = (recipeId + 1) % recipes.size();
-
                     remoteViews.setOnClickPendingIntent(R.id.next_recipe_image_view,
                             PendingIntent.getBroadcast(this, 0 /* requestCode */,
-                                    new IntentBuilder(this, MyAppWidgetProvider.class).setAction(MyAppWidgetProvider.NAVIGATE_TO_NEXT_RECIPE).putInt(MyAppWidgetProvider.RECIPE_ID_INT_EXTRA_KEY, nextRecipeId).build(),
+                                    new IntentBuilder(this, MyAppWidgetProvider.class).setAction(MyAppWidgetProvider.NAVIGATE_TO_NEXT_RECIPE).putInt(MyAppWidgetProvider.RECIPE_ID_INT_EXTRA_KEY, (recipeId + 1) % recipes.size()).build(),
                                     PendingIntent.FLAG_UPDATE_CURRENT));
 
-                    remoteViews.setRemoteAdapter(R.id.ingredients_list_view,
-                            new IntentBuilder(this, MyRemoteViewsService.class).putInt(MyRemoteViewsFactory.RECIPE_ID_INT_EXTRA_KEY, recipeId).build());
+                    remoteViews.setRemoteAdapter(R.id.ingredients_list_view, new Intent(this, MyRemoteViewsService.class));
+
+                    // sendBroadcast(...) should be called after remoteViews.setRemoteAdapter(...) for MyRemoteViewsService to receive the broadcast
+                    // sendBroadcast(...) should be called before appWidgetManager.notifyAppWidgetViewDataChanged because it uses recipeId embedded in the broadcast
+                    sendBroadcast(new IntentBuilder(MyRemoteViewsFactory.SEND_RECIPE_ID)
+                            .putInt(MyRemoteViewsFactory.RECIPE_ID_INT_EXTRA_KEY, recipeId)
+                            .putIntArray(MyRemoteViewsFactory.APP_WIDGET_ID_INT_ARRAY_EXTRA_KEY, appWidgetIds)
+                            .build());
 
                     // notifyAppWidgetViewDataChanged(...) should be called after remoteViews.setRemoteAdapter(...)
-                    appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_list_view);
+                    // appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_list_view);
 
                     appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
                 }
