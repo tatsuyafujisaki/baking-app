@@ -32,8 +32,12 @@ public class IntentUtils {
         return getIntent(fragment).getStringExtra(key);
     }
 
+    public static <T extends Parcelable> T getParcelable(Intent intent, String key) {
+        return intent.getParcelableExtra(key);
+    }
+
     public static <T extends Parcelable> T getParcelable(Fragment fragment, String key) {
-        return getIntent(fragment).getParcelableExtra(key);
+        return getParcelable(getIntent(fragment), key);
     }
 
     public static <T extends Parcelable> ArrayList<T> getParcelableArrayList(Fragment fragment, String key) {

@@ -29,10 +29,10 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
 public class StepDetailFragment extends Fragment implements Player.EventListener {
-    public static final String RECIPE_PARCELABLE_EXTRA_KEY = "RECIPE";
-    public static final String STEP_INDEX_INT_EXTRA_KEY = "STEP_INDEX";
-    private static final String PLAY_WHEN_READY_BOOL_EXTRA_KEY = "PLAY_WHEN_READY";
-    private static final String CURRENT_POSITION_LONG_EXTRA_KEY = "CURRENT_POSITION";
+    public static final String RECIPE_PARCELABLE_EXTRA_KEY = "RECIPE_PARCELABLE_EXTRA_KEY";
+    public static final String STEP_INDEX_INT_EXTRA_KEY = "STEP_INDEX_INT_EXTRA_KEY";
+    private static final String PLAY_WHEN_READY_BOOL_EXTRA_KEY = "PLAY_WHEN_READY_BOOL_EXTRA_KEY";
+    private static final String CURRENT_POSITION_LONG_EXTRA_KEY = "CURRENT_POSITION_LONG_EXTRA_KEY";
 
     @Inject
     ExtractorMediaSource.Factory factory;
