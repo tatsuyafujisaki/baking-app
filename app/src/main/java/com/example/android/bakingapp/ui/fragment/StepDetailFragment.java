@@ -15,7 +15,7 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.FragmentStepDetailBinding;
 import com.example.android.bakingapp.room.Step;
 import com.example.android.bakingapp.room.entity.Recipe;
-import com.example.android.bakingapp.util.ListUtils;
+import com.example.android.bakingapp.util.CollectionUtils;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
 import com.example.android.bakingapp.util.ui.IntentUtils;
 import com.example.android.bakingapp.util.ui.ViewUtils;
@@ -100,7 +100,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
                         stepIndex++;
                         break;
                     default:
-                        throw new IllegalArgumentException();
+                        throw new IllegalStateException();
                 }
 
                 initializeBottomNavigationView();
@@ -174,7 +174,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
 
     private String getVideoUrl() {
         Step step = recipe.steps.get(stepIndex);
-        return ListUtils.coalesceString(step.videoURL, step.thumbnailURL);
+        return CollectionUtils.coalesceString(step.videoURL, step.thumbnailURL);
     }
 
     @Override

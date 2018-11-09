@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.Objects;
 
 public class MyRemoteViewsFactory extends BroadcastReceiver implements RemoteViewsService.RemoteViewsFactory {
-    static final String SEND_RECIPE_ID = "com.example.android.bakingapp.appwidget.action.SEND_RECIPE_ID";
-    static final String RECIPE_ID_INT_EXTRA_KEY = "RECIPE_ID_INT_EXTRA_KEY";
-    static final String APP_WIDGET_ID_INT_ARRAY_EXTRA_KEY = "APP_WIDGET_ID_INT_ARRAY_EXTRA_KEY";
+    static final String SEND_RECIPE_ID_ACTION = "com.example.android.bakingapp.appwidget.action.SEND_RECIPE_ID_ACTION";
+    static final String APP_WIDGET_ID_INT_EXTRA_KEY = "APP_WIDGET_ID_INT_EXTRA_KEY";
+    static final String RECIPE_INDEX_INT_EXTRA_KEY = "RECIPE_INDEX_INT_EXTRA_KEY";
     private Context context;
     private RecipeViewModel recipeViewModel;
     private Recipe recipe;
-    private int recipeId;
+    private int recipeIndex;
 
     public MyRemoteViewsFactory() {
     }
@@ -36,10 +36,10 @@ public class MyRemoteViewsFactory extends BroadcastReceiver implements RemoteVie
         this.recipeViewModel = recipeViewModel;
     }
 
-    // Called after AppWidgetManager.updateAppWidget(...)
+    // Called after AppWidgetManager.updateAppWidgets(...)
     @Override
     public void onCreate() {
-        context.registerReceiver(this, new IntentFilter(SEND_RECIPE_ID));
+        context.registerReceiver(this, new IntentFilter(SEND_RECIPE_ID_ACTION));
     }
 
     // Called after onCreate() as well as after AppWidgetManager.notifyAppWidgetViewDataChanged(...)
@@ -50,7 +50,7 @@ public class MyRemoteViewsFactory extends BroadcastReceiver implements RemoteVie
         if (response.isSuccessful) {
             response.data.observeForever(recipes -> {
                 if (!Objects.requireNonNull(recipes).isEmpty()) {
-                    recipe = recipes.get(recipeId);
+                    recipe = recipes.get(recipeIndex);
                 }
             });
         }
@@ -75,10 +75,7 @@ public class MyRemoteViewsFactory extends BroadcastReceiver implements RemoteVie
         remoteViews.setTextViewText(R.id.quantity_text_view, String.valueOf(ingredient.quantity));
         remoteViews.setTextViewText(R.id.measure_text_view, ingredient.measure);
 
-        /*
-         * Setting an empty Intent to setOnClickFillInIntent(...) seems unnecessary
-         * but required to fire a PendingIntent specified in remoteViews.setPendingIntentTemplate(...)
-         */
+        // Setting an empty Intent to setOnClickFillInIntent(...) seems unnecessary but required to fire a PendingIntent specified in remoteViews.setPendingIntentTemplate(...)
         Intent intent = new Intent();
         remoteViews.setOnClickFillInIntent(R.id.ingredient_text_view, intent);
         remoteViews.setOnClickFillInIntent(R.id.quantity_text_view, intent);
@@ -109,14 +106,15 @@ public class MyRemoteViewsFactory extends BroadcastReceiver implements RemoteVie
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        switch (Objects.requireNonNull(intent.getAction())) {
-            case SEND_RECIPE_ID:
-                recipeId = IntentUtils.getInt(intent, RECIPE_ID_INT_EXTRA_KEY);
-                int[] appWidgetIds = IntentUtils.getIntArray(intent, APP_WIDGET_ID_INT_ARRAY_EXTRA_KEY);
-                AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_list_view);
+        switch (IntentUtils.requireAction(intent)) {
+            case SEND_RECIPE_ID_ACTION:
+                recipeIndex = IntentUtils.getInt(intent, RECIPE_INDEX_INT_EXTRA_KEY);
+                AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(
+                        IntentUtils.getInt(intent, APP_WIDGET_ID_INT_EXTRA_KEY),
+                        R.id.ingredients_list_view);
                 break;
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalStateException();
         }
     }
 }

@@ -1,8 +1,13 @@
 package com.example.android.bakingapp.util;
 
 import android.text.TextUtils;
+import android.util.SparseIntArray;
 
-public class ListUtils {
+public class CollectionUtils {
+    public static boolean containsKey(SparseIntArray xs, int key) {
+        return xs.indexOfKey(key) >= 0;
+    }
+
     @SafeVarargs
     public static <T> T coalesce(T... xs) {
         for (T x : xs) {

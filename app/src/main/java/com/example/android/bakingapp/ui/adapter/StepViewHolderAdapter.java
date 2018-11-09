@@ -18,7 +18,6 @@ import com.example.android.bakingapp.ui.activity.StepDetailActivity;
 import com.example.android.bakingapp.ui.fragment.StepDetailFragment;
 import com.example.android.bakingapp.util.ui.FragmentBuilder;
 import com.example.android.bakingapp.util.ui.FragmentUtils;
-import com.example.android.bakingapp.util.ui.IntentBuilder;
 
 import static com.example.android.bakingapp.ui.fragment.StepDetailFragment.RECIPE_PARCELABLE_EXTRA_KEY;
 import static com.example.android.bakingapp.ui.fragment.StepDetailFragment.STEP_INDEX_INT_EXTRA_KEY;
@@ -71,10 +70,9 @@ public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAd
 
                 FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_container, fragment);
             } else {
-                Intent intent = new IntentBuilder(context, StepDetailActivity.class)
-                        .putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipe)
-                        .putInt(STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
-                        .build();
+                Intent intent = new Intent(context, StepDetailActivity.class)
+                        .putExtra(RECIPE_PARCELABLE_EXTRA_KEY, recipe)
+                        .putExtra(STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition());
 
                 context.startActivity(intent);
             }

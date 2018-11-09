@@ -1,6 +1,7 @@
 package com.example.android.bakingapp.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.RecipeViewHolderBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.ui.activity.RecipeDetailActivity;
-import com.example.android.bakingapp.util.ui.IntentBuilder;
 
 import java.util.List;
 
@@ -55,9 +55,8 @@ public class RecipeViewHolderAdapter extends RecyclerView.Adapter<RecipeViewHold
         @Override
         public void onClick(View v) {
             Context context = v.getContext();
-            context.startActivity(new IntentBuilder(context, RecipeDetailActivity.class)
-                    .putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipes.get(getAdapterPosition()))
-                    .build());
+            context.startActivity(new Intent(context, RecipeDetailActivity.class)
+                    .putExtra(RECIPE_PARCELABLE_EXTRA_KEY, recipes.get(getAdapterPosition())));
         }
     }
 }

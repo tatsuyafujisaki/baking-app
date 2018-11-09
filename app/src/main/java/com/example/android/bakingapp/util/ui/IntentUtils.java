@@ -5,9 +5,18 @@ import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class IntentUtils {
+    public static String requireAction(Intent intent) {
+        return Objects.requireNonNull(intent.getAction());
+    }
+
     public static int getInt(Intent intent, String key) {
+        if (!intent.hasExtra(key)) {
+            throw new IllegalStateException();
+        }
+
         return intent.getIntExtra(key, Integer.MIN_VALUE);
     }
 
