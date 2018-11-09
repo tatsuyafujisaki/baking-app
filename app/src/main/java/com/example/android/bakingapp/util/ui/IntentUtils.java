@@ -7,27 +7,27 @@ import android.support.v4.app.Fragment;
 import java.util.ArrayList;
 
 public class IntentUtils {
-    public static int getIntExtra(Intent intent, String key) {
+    public static int getInt(Intent intent, String key) {
         return intent.getIntExtra(key, Integer.MIN_VALUE);
     }
 
-    public static int getIntExtra(Fragment fragment, String key) {
-        return getIntExtra(getIntent(fragment), key);
+    public static int getInt(Fragment fragment, String key) {
+        return getInt(getIntent(fragment), key);
     }
 
     public static int[] getIntArray(Intent intent, String key) {
         return intent.getIntArrayExtra(key);
     }
 
-    public static String getStringExtra(Fragment fragment, String key) {
+    public static String getString(Fragment fragment, String key) {
         return getIntent(fragment).getStringExtra(key);
     }
 
-    public static <T extends Parcelable> T getParcelableExtra(Fragment fragment, String key) {
+    public static <T extends Parcelable> T getParcelable(Fragment fragment, String key) {
         return getIntent(fragment).getParcelableExtra(key);
     }
 
-    public static <T extends Parcelable> ArrayList<T> getParcelableArrayListExtra(Fragment fragment, String key) {
+    public static <T extends Parcelable> ArrayList<T> getParcelableArrayList(Fragment fragment, String key) {
         return getIntent(fragment).getParcelableArrayListExtra(key);
     }
 

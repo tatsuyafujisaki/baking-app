@@ -17,13 +17,13 @@ public class MyAppWidgetProvider extends AppWidgetProvider {
     // Called after an app widget is created or android:updatePeriodMillis is reached
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        MyJobIntentService.start(context, appWidgetManager, appWidgetIds);
+        MyJobIntentService.start(context, appWidgetIds);
     }
 
     // Called after an app widget is resized
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        MyJobIntentService.start(context, appWidgetManager, new int[]{appWidgetId});
+        MyJobIntentService.start(context, new int[]{appWidgetId});
     }
 
     @Override
@@ -31,7 +31,7 @@ public class MyAppWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if(Objects.requireNonNull(intent.getAction()).equals(NAVIGATE_TO_NEXT_RECIPE)) {
-            MyJobIntentService.start(context, IntentUtils.getIntExtra(intent, RECIPE_ID_INT_EXTRA_KEY));
+            MyJobIntentService.start(context, IntentUtils.getInt(intent, RECIPE_ID_INT_EXTRA_KEY));
         }
     }
 }

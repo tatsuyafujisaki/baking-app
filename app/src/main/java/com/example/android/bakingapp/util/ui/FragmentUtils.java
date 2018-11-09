@@ -9,10 +9,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class FragmentUtils {
-    public static boolean hasArguments(Fragment fragment) {
-        return fragment.getArguments() != null;
-    }
-
     public static int getInt(Fragment fragment, String key) {
         return requireArguments(fragment).getInt(key);
     }

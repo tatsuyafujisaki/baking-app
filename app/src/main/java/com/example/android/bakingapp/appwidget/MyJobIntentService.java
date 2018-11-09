@@ -31,14 +31,12 @@ public class MyJobIntentService extends JobIntentService {
     private static final String NAVIGATE_TO_NEXT_RECIPE = "NAVIGATE_TO_NEXT_RECIPE";
     private static final String RECIPE_ID_INT_EXTRA_KEY = "RECIPE_ID_INT_EXTRA_KEY";
 
-    private static AppWidgetManager appWidgetManager;
     private static int[] appWidgetIds;
 
     @Inject
     RecipeViewModel recipeViewModel;
 
-    static void start(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        MyJobIntentService.appWidgetManager = appWidgetManager;
+    static void start(Context context, int[] appWidgetIds) {
         MyJobIntentService.appWidgetIds = appWidgetIds;
 
         enqueueWork(context, MyJobIntentService.class, 0 /* jobId */,
@@ -68,7 +66,7 @@ public class MyJobIntentService extends JobIntentService {
                 recipeId = 0;
                 break;
             case NAVIGATE_TO_NEXT_RECIPE:
-                recipeId = IntentUtils.getIntExtra(intent, RECIPE_ID_INT_EXTRA_KEY);
+                recipeId = IntentUtils.getInt(intent, RECIPE_ID_INT_EXTRA_KEY);
                 break;
             default:
                 throw new IllegalStateException();
@@ -86,12 +84,13 @@ public class MyJobIntentService extends JobIntentService {
                     RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.app_widget);
 
                     Recipe recipe = recipes.get(recipeId);
+                    remoteViews.setTextViewText(R.id.recipe_name_text_view, recipe.name);
+                    remoteViews.setRemoteAdapter(R.id.ingredients_list_view, new Intent(this, MyRemoteViewsService.class));
 
                     PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* requestCode */,
                             new IntentBuilder(this, RecipeDetailActivity.class).putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipe).build(),
                             PendingIntent.FLAG_UPDATE_CURRENT);
 
-                    remoteViews.setTextViewText(R.id.recipe_name_text_view, recipe.name);
                     remoteViews.setOnClickPendingIntent(R.id.recipe_name_text_view, pendingIntent);
                     remoteViews.setPendingIntentTemplate(R.id.ingredients_list_view, pendingIntent);
 
@@ -100,19 +99,13 @@ public class MyJobIntentService extends JobIntentService {
                                     new IntentBuilder(this, MyAppWidgetProvider.class).setAction(MyAppWidgetProvider.NAVIGATE_TO_NEXT_RECIPE).putInt(MyAppWidgetProvider.RECIPE_ID_INT_EXTRA_KEY, (recipeId + 1) % recipes.size()).build(),
                                     PendingIntent.FLAG_UPDATE_CURRENT));
 
-                    remoteViews.setRemoteAdapter(R.id.ingredients_list_view, new Intent(this, MyRemoteViewsService.class));
 
-                    // sendBroadcast(...) should be called after remoteViews.setRemoteAdapter(...) for MyRemoteViewsService to receive the broadcast
-                    // sendBroadcast(...) should be called before appWidgetManager.notifyAppWidgetViewDataChanged because it uses recipeId embedded in the broadcast
                     sendBroadcast(new IntentBuilder(MyRemoteViewsFactory.SEND_RECIPE_ID)
                             .putInt(MyRemoteViewsFactory.RECIPE_ID_INT_EXTRA_KEY, recipeId)
                             .putIntArray(MyRemoteViewsFactory.APP_WIDGET_ID_INT_ARRAY_EXTRA_KEY, appWidgetIds)
                             .build());
 
-                    // notifyAppWidgetViewDataChanged(...) should be called after remoteViews.setRemoteAdapter(...)
-                    // appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_list_view);
-
-                    appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
+                    AppWidgetManager.getInstance(this).updateAppWidget(appWidgetIds, remoteViews);
                 }
             });
         }

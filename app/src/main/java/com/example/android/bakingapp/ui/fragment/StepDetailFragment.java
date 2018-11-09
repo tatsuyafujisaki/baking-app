@@ -62,8 +62,8 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
             recipe = FragmentUtils.getParcelable(this, RECIPE_PARCELABLE_EXTRA_KEY);
             stepIndex = FragmentUtils.getInt(this, STEP_INDEX_INT_EXTRA_KEY);
         } else {
-            recipe = IntentUtils.getParcelableExtra(this, RECIPE_PARCELABLE_EXTRA_KEY);
-            stepIndex = IntentUtils.getIntExtra(this, STEP_INDEX_INT_EXTRA_KEY);
+            recipe = IntentUtils.getParcelable(this, RECIPE_PARCELABLE_EXTRA_KEY);
+            stepIndex = IntentUtils.getInt(this, STEP_INDEX_INT_EXTRA_KEY);
         }
 
         requireActivity().setTitle(recipe.name);

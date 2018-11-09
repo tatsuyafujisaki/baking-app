@@ -35,7 +35,7 @@ public class RecipeDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FragmentRecipeDetailBinding binding = FragmentRecipeDetailBinding.inflate(inflater, container, false);
 
-        Recipe recipe = IntentUtils.getParcelableExtra(this, RECIPE_PARCELABLE_EXTRA_KEY);
+        Recipe recipe = IntentUtils.getParcelable(this, RECIPE_PARCELABLE_EXTRA_KEY);
 
         requireActivity().setTitle(recipe.name);
 

@@ -111,7 +111,7 @@ public class MyRemoteViewsFactory extends BroadcastReceiver implements RemoteVie
     public void onReceive(Context context, Intent intent) {
         switch (Objects.requireNonNull(intent.getAction())) {
             case SEND_RECIPE_ID:
-                recipeId = IntentUtils.getIntExtra(intent, RECIPE_ID_INT_EXTRA_KEY);
+                recipeId = IntentUtils.getInt(intent, RECIPE_ID_INT_EXTRA_KEY);
                 int[] appWidgetIds = IntentUtils.getIntArray(intent, APP_WIDGET_ID_INT_ARRAY_EXTRA_KEY);
                 AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetIds, R.id.ingredients_list_view);
                 break;
