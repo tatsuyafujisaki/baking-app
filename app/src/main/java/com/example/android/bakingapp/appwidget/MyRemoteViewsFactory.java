@@ -20,7 +20,11 @@ public class MyRemoteViewsFactory extends BroadcastReceiver implements RemoteVie
     private Context context;
     private Recipe recipe;
 
-    MyRemoteViewsFactory(Context context) {
+    // AndroidManifest.xml gives a warning if a BroadcastReceiver does not have a parameterless constructor
+    public MyRemoteViewsFactory() {
+    }
+
+    public MyRemoteViewsFactory(Context context) {
         this.context = context;
     }
 

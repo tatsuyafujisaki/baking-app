@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.SparseIntArray;
 import android.widget.RemoteViews;
 
@@ -103,10 +104,11 @@ public class MyJobIntentService extends JobIntentService {
 
     private void setPendingIntentForLaunch(int appWidgetId, RemoteViews remoteViews, Recipe recipe) {
         Intent intent = new Intent(this, RecipeDetailActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 .putExtra(RecipeDetailFragment.RECIPE_PARCELABLE_EXTRA_KEY, recipe);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = TaskStackBuilder.create(this)
+                .addNextIntentWithParentStack(intent)
+                .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
 
         remoteViews.setOnClickPendingIntent(R.id.recipe_name_text_view, pendingIntent);
         remoteViews.setPendingIntentTemplate(R.id.ingredients_list_view, pendingIntent);
