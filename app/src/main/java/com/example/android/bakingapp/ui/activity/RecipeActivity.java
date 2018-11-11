@@ -4,6 +4,10 @@ import android.arch.lifecycle.LiveData;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.widget.Toast;
@@ -35,6 +39,8 @@ public class RecipeActivity extends AppCompatActivity {
     RecipeViewModel recipeViewModel;
 
     private List<Recipe> recipes;
+    @Nullable
+    private CountingIdlingResource countingIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,7 @@ public class RecipeActivity extends AppCompatActivity {
         }
 
         if (isTablet) {
-            ((GridLayoutManager) Objects.requireNonNull(binding.recyclerView.getLayoutManager())).setSpanCount(gridColumnSpan);
+            ((GridLayoutManager) Objects.requireNonNull(binding.recipeRecyclerView.getLayoutManager())).setSpanCount(gridColumnSpan);
         }
 
         if (savedInstanceState != null) {
@@ -85,10 +91,18 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     private void setAdapter(ActivityRecipeBinding binding) {
-        binding.recyclerView.setAdapter(new RecipeViewHolderAdapter(recipes));
+        binding.recipeRecyclerView.setAdapter(new RecipeViewHolderAdapter(recipes));
     }
 
     private void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    @VisibleForTesting
+    @NonNull
+    IdlingResource getIdlingResource() {
+        return countingIdlingResource != null
+                ? countingIdlingResource
+                : new CountingIdlingResource("MainActivityCountingIdlingResource");
     }
 }

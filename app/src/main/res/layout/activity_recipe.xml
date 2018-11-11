@@ -7,7 +7,7 @@
         <include layout="@layout/recipes_label" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/recipe_recycler_view"
             style="@style/linear_recycler_view"
             tools:listitem="@layout/recipe_view_holder" />
     </LinearLayout>
