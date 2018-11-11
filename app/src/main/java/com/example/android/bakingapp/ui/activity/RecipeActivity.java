@@ -39,6 +39,7 @@ public class RecipeActivity extends AppCompatActivity {
     RecipeViewModel recipeViewModel;
 
     private List<Recipe> recipes;
+
     @Nullable
     private CountingIdlingResource countingIdlingResource;
 

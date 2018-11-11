@@ -43,8 +43,8 @@ public class RecipeViewHolderAdapter extends RecyclerView.Adapter<RecipeViewHold
         return recipes.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final RecipeViewHolderBinding binding;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public final RecipeViewHolderBinding binding;
 
         ViewHolder(RecipeViewHolderBinding binding) {
             super(binding.getRoot());
