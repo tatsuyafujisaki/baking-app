@@ -52,7 +52,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private long currentPosition;
 
     @Nullable
-    private CountingIdlingResource countingIdlingResource = (CountingIdlingResource) getIdlingResource();
+    private final CountingIdlingResource countingIdlingResource = (CountingIdlingResource) getIdlingResource();
 
     @Override
     public void onAttach(Context context) {
