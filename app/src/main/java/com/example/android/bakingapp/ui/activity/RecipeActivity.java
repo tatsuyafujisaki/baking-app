@@ -4,10 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.widget.Toast;
@@ -39,9 +35,6 @@ public class RecipeActivity extends AppCompatActivity {
     RecipeViewModel recipeViewModel;
 
     private List<Recipe> recipes;
-
-    @Nullable
-    private CountingIdlingResource countingIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +90,5 @@ public class RecipeActivity extends AppCompatActivity {
 
     private void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
-    }
-
-    @VisibleForTesting
-    @NonNull
-    IdlingResource getIdlingResource() {
-        return countingIdlingResource != null
-                ? countingIdlingResource
-                : new CountingIdlingResource("MainActivityCountingIdlingResource");
     }
 }

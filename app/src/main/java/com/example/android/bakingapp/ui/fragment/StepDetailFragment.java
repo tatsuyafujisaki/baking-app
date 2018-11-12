@@ -4,6 +4,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -47,6 +51,9 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private boolean playWhenReady = true;
     private long currentPosition;
 
+    @Nullable
+    private CountingIdlingResource countingIdlingResource = (CountingIdlingResource) getIdlingResource();
+
     @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
@@ -84,7 +91,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         }
 
         binding.stepDescriptionTextView.setText(recipe.steps.get(stepIndex).description);
-
 
         if (isTablet) {
             ViewUtils.remove(binding.bottomNavigationView);
@@ -202,15 +208,31 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private void showProgressBar() {
         binding.playerView.setVisibility(View.INVISIBLE);
         binding.progressBar.setVisibility(View.VISIBLE);
+
+        if (countingIdlingResource != null) {
+            countingIdlingResource.increment();
+        }
     }
 
     private void showExoPlayer() {
         binding.progressBar.setVisibility(View.GONE);
         binding.playerView.setVisibility(View.VISIBLE);
+
+        if (countingIdlingResource != null) {
+            countingIdlingResource.decrement();
+        }
     }
 
     private void collapseExoPlayer() {
         binding.progressBar.setVisibility(View.GONE);
         binding.playerView.setVisibility(View.GONE);
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        return countingIdlingResource != null
+                ? countingIdlingResource
+                : new CountingIdlingResource("CountingIdlingResource");
     }
 }
