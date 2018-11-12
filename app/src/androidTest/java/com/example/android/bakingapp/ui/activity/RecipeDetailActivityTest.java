@@ -1,7 +1,5 @@
 package com.example.android.bakingapp.ui.activity;
 
-import android.support.test.espresso.IdlingRegistry;
-import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -12,8 +10,6 @@ import com.example.android.bakingapp.ui.adapter.RecipeViewHolderAdapter;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,18 +28,14 @@ public class RecipeDetailActivityTest {
     @Rule
     public ActivityTestRule<RecipeActivity> activityTestRule = new ActivityTestRule<>(RecipeActivity.class);
 
-    private IdlingResource idlingResource;
-
-    @Before
-    public void registerIdlingResource() {
-        idlingResource = activityTestRule.getActivity().getIdlingResource();
-        IdlingRegistry.getInstance().register(idlingResource);
-    }
-
     @Test
-    public void test() {
+    public void recipeDetailActivityTest() {
         final String recipe = "Nutella Pie";
+
+        final int ingredientPosition = 0;
         final String ingredient = "Graham Cracker crumbs";
+
+        final int stepPosition = 0;
         final String step = "1. Recipe Introduction";
 
         onView(withId(R.id.recipe_recycler_view))
@@ -59,22 +51,15 @@ public class RecipeDetailActivityTest {
                 }, click()));
 
         onView(withId(R.id.ingredient_recycler_view))
-                .perform(RecyclerViewActions.scrollToPosition(0));
+                .perform(RecyclerViewActions.scrollToPosition(ingredientPosition));
 
         onView(allOf(withId(R.id.ingredient_text_view), withText(ingredient)))
                 .check(matches(isDisplayed()));
 
         onView(withId(R.id.step_recycler_view))
-                .perform(RecyclerViewActions.scrollToPosition(0));
+                .perform(RecyclerViewActions.scrollToPosition(stepPosition));
 
         onView(allOf(withId(R.id.step_text_view), withText(step)))
                 .check(matches(isDisplayed()));
-    }
-
-    @After
-    public void unregisterIdlingResource() {
-        if (idlingResource != null) {
-            IdlingRegistry.getInstance().unregister(idlingResource);
-        }
     }
 }
