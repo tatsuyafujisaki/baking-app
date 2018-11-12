@@ -89,8 +89,8 @@ public class MyJobIntentService extends JobIntentService {
 
                 Recipe recipe = recipes.get(recipeIndex);
 
-                remoteViews.setTextViewText(R.id.recipe_name_text_view, recipe.name);
-                remoteViews.setRemoteAdapter(R.id.ingredients_list_view, new Intent(this, MyRemoteViewsService.class));
+                remoteViews.setTextViewText(R.id.app_widget_recipe_name_text_view, recipe.name);
+                remoteViews.setRemoteAdapter(R.id.app_widget_ingredient_list_view, new Intent(this, MyRemoteViewsService.class));
 
                 setPendingIntentForLaunch(appWidgetId, remoteViews, recipe);
                 setPendingIntentForNextRecipe(appWidgetId, remoteViews);
@@ -110,8 +110,8 @@ public class MyJobIntentService extends JobIntentService {
                 .addNextIntentWithParentStack(intent)
                 .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        remoteViews.setOnClickPendingIntent(R.id.recipe_name_text_view, pendingIntent);
-        remoteViews.setPendingIntentTemplate(R.id.ingredients_list_view, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.app_widget_recipe_name_text_view, pendingIntent);
+        remoteViews.setPendingIntentTemplate(R.id.app_widget_ingredient_list_view, pendingIntent);
     }
 
     private void setPendingIntentForNextRecipe(int appWidgetId, RemoteViews remoteViews) {
@@ -120,7 +120,7 @@ public class MyJobIntentService extends JobIntentService {
                 .putExtra(MyAppWidgetProvider.APP_WIDGET_ID_INT_EXTRA_KEY, appWidgetId);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.next_recipe_image_view, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.app_widget_recipe_name_text_view, pendingIntent);
     }
 
     private void sendBroadcastForUpdateListView(int appWidgetId, Recipe recipe) {

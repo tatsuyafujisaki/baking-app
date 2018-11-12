@@ -93,7 +93,7 @@ public class MyRemoteViewsFactory extends BroadcastReceiver implements RemoteVie
             case SEND_RECIPE_ID_ACTION:
                 int appWidgetId = IntentUtils.getInt(intent, APP_WIDGET_ID_INT_EXTRA_KEY);
                 recipe = IntentUtils.getParcelable(intent, RECIPE_PARCELABLE_EXTRA_KEY);
-                AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.ingredients_list_view);
+                AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetId, R.id.app_widget_ingredient_list_view);
                 break;
             default:
                 throw new IllegalStateException();
