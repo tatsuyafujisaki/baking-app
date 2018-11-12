@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -50,7 +51,7 @@ public class RecipeActivityTest {
     @Test
     public void recipeServingsTest() {
         String recipe = "Brownies";
-        int servings = 8;
+        String servings = "Servings: 8";
 
         onView(withId(R.id.recipe_recycler_view))
                 .perform(RecyclerViewActions.scrollToHolder(new TypeSafeMatcher<RecipeViewHolderAdapter.ViewHolder>() {
@@ -64,7 +65,7 @@ public class RecipeActivityTest {
                     }
                 }));
 
-        onView(allOf(withId(R.id.servings_text_view), withText(servings)))
+        onView(allOf(withId(R.id.servings_text_view), withText(servings), hasSibling(withText(recipe))))
                 .check(matches(isDisplayed()));
     }
 }
