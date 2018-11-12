@@ -37,22 +37,18 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     public static final String STEP_INDEX_INT_EXTRA_KEY = "STEP_INDEX_INT_EXTRA_KEY";
     private static final String PLAY_WHEN_READY_BOOL_EXTRA_KEY = "PLAY_WHEN_READY_BOOL_EXTRA_KEY";
     private static final String CURRENT_POSITION_LONG_EXTRA_KEY = "CURRENT_POSITION_LONG_EXTRA_KEY";
-
+    @Nullable
+    private final CountingIdlingResource countingIdlingResource = (CountingIdlingResource) getIdlingResource();
     @Inject
     ExtractorMediaSource.Factory factory;
-
     @Inject
     boolean isTablet;
-
     private Context context;
     private FragmentStepDetailBinding binding;
     private Recipe recipe;
     private int stepIndex;
     private boolean playWhenReady = true;
     private long currentPosition;
-
-    @Nullable
-    private final CountingIdlingResource countingIdlingResource = (CountingIdlingResource) getIdlingResource();
 
     @Override
     public void onAttach(Context context) {
@@ -218,7 +214,7 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         binding.progressBar.setVisibility(View.GONE);
         binding.playerView.setVisibility(View.VISIBLE);
 
-        if (countingIdlingResource != null) {
+        if (countingIdlingResource != null && !countingIdlingResource.isIdleNow()) {
             countingIdlingResource.decrement();
         }
     }
