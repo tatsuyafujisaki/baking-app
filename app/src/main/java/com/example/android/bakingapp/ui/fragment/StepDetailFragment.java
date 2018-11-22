@@ -32,7 +32,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 
-public class StepDetailFragment extends Fragment implements Player.EventListener {
+public class StepDetailFragment extends Fragment {
     public static final String RECIPE_PARCELABLE_EXTRA_KEY = "RECIPE_PARCELABLE_EXTRA_KEY";
     public static final String STEP_INDEX_INT_EXTRA_KEY = "STEP_INDEX_INT_EXTRA_KEY";
     private static final String PLAY_WHEN_READY_BOOL_EXTRA_KEY = "PLAY_WHEN_READY_BOOL_EXTRA_KEY";
@@ -153,7 +153,14 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
         showProgressBar();
 
         player = ExoPlayerFactory.newSimpleInstance(context);
-        player.addListener(this);
+        player.addListener(new Player.EventListener() {
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                if (playbackState == Player.STATE_READY) {
+                    showExoPlayer();
+                }
+            }
+        });
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentPosition);
         player.prepare(factory.createMediaSource(Uri.parse(url)), false, true);
@@ -177,13 +184,6 @@ public class StepDetailFragment extends Fragment implements Player.EventListener
     private String getVideoUrl() {
         Step step = recipe.steps.get(stepIndex);
         return CollectionUtils.coalesceString(step.videoURL, step.thumbnailURL);
-    }
-
-    @Override
-    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        if (playbackState == Player.STATE_READY) {
-            showExoPlayer();
-        }
     }
 
     @Override
