@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.example.android.bakingapp.R;
@@ -51,31 +49,28 @@ public class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAd
         return recipe.steps.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
         final StepViewHolderBinding binding;
 
         ViewHolder(StepViewHolderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            binding.getRoot().setOnClickListener(this);
-        }
+            binding.getRoot().setOnClickListener(v -> {
+                if (isTablet) {
+                    Fragment fragment = new FragmentBuilder(new StepDetailFragment())
+                            .putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipe)
+                            .putInt(STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
+                            .build();
 
-        @Override
-        public void onClick(View v) {
-            if (isTablet) {
-                Fragment fragment = new FragmentBuilder(new StepDetailFragment())
-                        .putParcelable(RECIPE_PARCELABLE_EXTRA_KEY, recipe)
-                        .putInt(STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
-                        .build();
+                    FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_container, fragment);
+                } else {
+                    Intent intent = new Intent(context, StepDetailActivity.class)
+                            .putExtra(RECIPE_PARCELABLE_EXTRA_KEY, recipe)
+                            .putExtra(STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition());
 
-                FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_container, fragment);
-            } else {
-                Intent intent = new Intent(context, StepDetailActivity.class)
-                        .putExtra(RECIPE_PARCELABLE_EXTRA_KEY, recipe)
-                        .putExtra(STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition());
-
-                context.startActivity(intent);
-            }
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
