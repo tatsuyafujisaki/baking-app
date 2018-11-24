@@ -2,15 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- android:foreground="?android:selectableItemBackground" enables a ripple effect on click -->
     <TextView
         android:id="@+id/step_text_view"
         style="?attr/textAppearanceListItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/text_small_margin"
-        android:layout_marginBottom="@dimen/text_small_margin"
         android:layout_marginStart="@dimen/text_margin"
+        android:layout_marginTop="@dimen/text_small_margin"
         android:layout_marginEnd="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_small_margin"
+        android:foreground="?android:selectableItemBackground"
         android:textColor="?colorAccent"
         tools:text="@tools:sample/lorem" />
 </layout>
