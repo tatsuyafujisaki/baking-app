@@ -1,6 +1,7 @@
 package com.example.android.bakingapp.room.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.example.android.bakingapp.room.dao.RecipeDao;
@@ -13,7 +14,6 @@ import com.example.android.bakingapp.util.converter.Converter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -24,15 +24,13 @@ import retrofit2.Response;
 public class RecipeRepository {
     private final RecipeService recipeService;
     private final RecipeDao recipeDao;
-    private final Executor executor;
     private String errorMessage;
     private long lastUpdate;
 
     @Inject
-    public RecipeRepository(RecipeService recipeService, RecipeDao recipeDao, Executor executor) {
+    public RecipeRepository(RecipeService recipeService, RecipeDao recipeDao) {
         this.recipeService = recipeService;
         this.recipeDao = recipeDao;
-        this.executor = executor;
     }
 
     public ApiResponse<LiveData<List<Recipe>>> getRecipes() {
@@ -45,10 +43,9 @@ public class RecipeRepository {
                     if (response.isSuccessful()) {
                         List<Recipe> recipes = Converter.toArrayList(response.body());
 
-                        executor.execute(() -> {
-                            recipeDao.save(recipes);
-                            lastUpdate = System.currentTimeMillis();
-                        });
+                        AsyncTask.execute(() -> recipeDao.save(recipes));
+
+                        lastUpdate = System.currentTimeMillis();
                     } else {
                         try {
                             errorMessage = Objects.requireNonNull(response.errorBody()).string();

@@ -25,8 +25,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import javax.inject.Singleton;
 
@@ -37,12 +35,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class ApplicationModule {
-    @Singleton
-    @Provides
-    static Executor provideExecutor() {
-        return Executors.newSingleThreadExecutor();
-    }
-
     @Singleton
     @Provides
     static Context provideContext(Application application) {
@@ -100,8 +92,8 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    static RecipeRepository provideRecipeRepository(RecipeService recipeService, RecipeDao recipeDao, Executor executor) {
-        return new RecipeRepository(recipeService, recipeDao, executor);
+    static RecipeRepository provideRecipeRepository(RecipeService recipeService, RecipeDao recipeDao) {
+        return new RecipeRepository(recipeService, recipeDao);
     }
 
     @Singleton
