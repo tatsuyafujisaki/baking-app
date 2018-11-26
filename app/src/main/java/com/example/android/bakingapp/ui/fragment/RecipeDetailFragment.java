@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,16 +31,16 @@ import static com.example.android.bakingapp.ui.fragment.StepDetailFragment.STEP_
 
 public class RecipeDetailFragment extends Fragment {
     public static final String RECIPE_PARCELABLE_EXTRA_KEY = "RECIPE_PARCELABLE_EXTRA_KEY";
-    private FragmentRecipeDetailBinding binding;
     @Inject
     boolean isTablet;
+    private FragmentRecipeDetailBinding binding;
     private Context context;
 
     @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
-        super.onAttach(context);
         this.context = context;
+        super.onAttach(context);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class RecipeDetailFragment extends Fragment {
         requireActivity().setTitle(recipe.name);
 
         binding.ingredientRecyclerView.setAdapter(new IngredientAdapter(recipe.ingredients));
-        binding.stepRecyclerView.setAdapter(new StepAdapter(context, requireFragmentManager(), recipe, isTablet));
+        binding.stepRecyclerView.setAdapter(new StepAdapter(recipe));
     }
 
     private class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
@@ -100,16 +99,10 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     private class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
-        private final Context context;
-        private final FragmentManager fragmentManager;
         private final Recipe recipe;
-        private final boolean isTablet;
 
-        private StepAdapter(Context context, FragmentManager fragmentManager, Recipe recipe, boolean isTablet) {
-            this.context = context;
-            this.fragmentManager = fragmentManager;
+        private StepAdapter(Recipe recipe) {
             this.recipe = recipe;
-            this.isTablet = isTablet;
         }
 
         @NonNull
@@ -141,7 +134,7 @@ public class RecipeDetailFragment extends Fragment {
                                 .putInt(STEP_INDEX_INT_EXTRA_KEY, getAdapterPosition())
                                 .build();
 
-                        FragmentUtils.replace(fragmentManager, R.id.step_detail_fragment_container, fragment);
+                        FragmentUtils.replace(requireFragmentManager(), R.id.step_detail_fragment_container, fragment);
                     } else {
                         Intent intent = new Intent(context, StepDetailActivity.class)
                                 .putExtra(RECIPE_PARCELABLE_EXTRA_KEY, recipe)
