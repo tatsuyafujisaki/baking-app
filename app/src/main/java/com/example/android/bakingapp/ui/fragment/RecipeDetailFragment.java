@@ -58,14 +58,14 @@ public class RecipeDetailFragment extends Fragment {
 
         requireActivity().setTitle(recipe.name);
 
-        binding.ingredientRecyclerView.setAdapter(new IngredientViewHolderAdapter(recipe.ingredients));
-        binding.stepRecyclerView.setAdapter(new StepViewHolderAdapter(context, requireFragmentManager(), recipe, isTablet));
+        binding.ingredientRecyclerView.setAdapter(new IngredientAdapter(recipe.ingredients));
+        binding.stepRecyclerView.setAdapter(new StepAdapter(context, requireFragmentManager(), recipe, isTablet));
     }
 
-    private class IngredientViewHolderAdapter extends RecyclerView.Adapter<IngredientViewHolderAdapter.ViewHolder> {
+    private class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
         private final List<Ingredient> ingredients;
 
-        private IngredientViewHolderAdapter(List<Ingredient> ingredients) {
+        private IngredientAdapter(List<Ingredient> ingredients) {
             this.ingredients = ingredients;
         }
 
@@ -99,13 +99,13 @@ public class RecipeDetailFragment extends Fragment {
         }
     }
 
-    private class StepViewHolderAdapter extends RecyclerView.Adapter<StepViewHolderAdapter.ViewHolder> {
+    private class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
         private final Context context;
         private final FragmentManager fragmentManager;
         private final Recipe recipe;
         private final boolean isTablet;
 
-        private StepViewHolderAdapter(Context context, FragmentManager fragmentManager, Recipe recipe, boolean isTablet) {
+        private StepAdapter(Context context, FragmentManager fragmentManager, Recipe recipe, boolean isTablet) {
             this.context = context;
             this.fragmentManager = fragmentManager;
             this.recipe = recipe;

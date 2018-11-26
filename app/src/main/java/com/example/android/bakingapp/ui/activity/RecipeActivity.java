@@ -92,17 +92,17 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     private void setAdapter(ActivityRecipeBinding binding) {
-        binding.recipeRecyclerView.setAdapter(new RecipeViewHolderAdapter(recipes));
+        binding.recipeRecyclerView.setAdapter(new Adapter(recipes));
     }
 
     private void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
-    private class RecipeViewHolderAdapter extends RecyclerView.Adapter<RecipeViewHolderAdapter.ViewHolder> {
+    private class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         private final List<Recipe> recipes;
 
-        private RecipeViewHolderAdapter(List<Recipe> recipes) {
+        private Adapter(List<Recipe> recipes) {
             this.recipes = recipes;
         }
 
