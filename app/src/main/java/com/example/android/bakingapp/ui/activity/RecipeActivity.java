@@ -1,17 +1,22 @@
 package com.example.android.bakingapp.ui.activity;
 
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.databinding.ActivityRecipeBinding;
+import com.example.android.bakingapp.databinding.RecipeViewHolderBinding;
 import com.example.android.bakingapp.room.entity.Recipe;
-import com.example.android.bakingapp.ui.adapter.RecipeViewHolderAdapter;
 import com.example.android.bakingapp.util.ApiResponse;
 import com.example.android.bakingapp.util.NetworkUtils;
 import com.example.android.bakingapp.util.converter.Converter;
@@ -23,6 +28,8 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+
+import static com.example.android.bakingapp.ui.fragment.RecipeDetailFragment.RECIPE_PARCELABLE_EXTRA_KEY;
 
 public class RecipeActivity extends AppCompatActivity {
     @Inject
@@ -90,5 +97,46 @@ public class RecipeActivity extends AppCompatActivity {
 
     private void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+    private class RecipeViewHolderAdapter extends RecyclerView.Adapter<RecipeViewHolderAdapter.ViewHolder> {
+        private final List<Recipe> recipes;
+
+        private RecipeViewHolderAdapter(List<Recipe> recipes) {
+            this.recipes = recipes;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            return new ViewHolder(RecipeViewHolderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            Recipe recipe = recipes.get(position);
+
+            holder.binding.recipeTextView.setText(recipe.name);
+            holder.binding.servingsTextView.setText(holder.itemView.getContext().getString(R.string.servings_format, recipe.servings));
+        }
+
+        @Override
+        public int getItemCount() {
+            return recipes.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public final RecipeViewHolderBinding binding;
+
+            ViewHolder(RecipeViewHolderBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
+                binding.getRoot().setOnClickListener(v -> {
+                    Context context = v.getContext();
+                    context.startActivity(new Intent(context, RecipeDetailActivity.class)
+                            .putExtra(RECIPE_PARCELABLE_EXTRA_KEY, recipes.get(getAdapterPosition())));
+                });
+            }
+        }
     }
 }
