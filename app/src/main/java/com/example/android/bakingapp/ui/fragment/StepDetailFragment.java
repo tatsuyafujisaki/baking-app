@@ -71,8 +71,11 @@ public class StepDetailFragment extends Fragment {
 
         requireActivity().setTitle(recipe.name);
 
-        // savedInstanceState is not null if onCreateView() is being called due to device rotation.
-        if (savedInstanceState != null) {
+        /*
+         * savedInstanceState.containsKey(null) is required to skip the case that network was unavailable and then the device was rotated,
+         * In the case, savedInstanceState is not null but contains no key.
+         */
+        if (savedInstanceState != null && savedInstanceState.containsKey(null)) {
             stepIndex = savedInstanceState.getInt(STEP_INDEX_INT_EXTRA_KEY);
 
             // savedInstanceState does not contain PLAY_WHEN_READY_BOOL_EXTRA_KEY if the current step of a recipe has no video.
@@ -192,7 +195,7 @@ public class StepDetailFragment extends Fragment {
 
         SimpleExoPlayer player = (SimpleExoPlayer) binding.playerView.getPlayer();
 
-        // player does not exist if the current step of a recipe has no video.
+        // player is null if the current step of a recipe has no video.
         if (player != null) {
             outState.putBoolean(PLAY_WHEN_READY_BOOL_EXTRA_KEY, player.getPlayWhenReady());
             outState.putLong(CURRENT_POSITION_LONG_EXTRA_KEY, player.getCurrentPosition());

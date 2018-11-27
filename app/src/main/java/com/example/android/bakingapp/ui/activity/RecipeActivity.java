@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class RecipeActivity extends AppCompatActivity {
 
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));
+            binding.recipesLabel.setVisibility(View.GONE);
             return;
         }
 
@@ -59,7 +61,11 @@ public class RecipeActivity extends AppCompatActivity {
             ((GridLayoutManager) Objects.requireNonNull(binding.recipeRecyclerView.getLayoutManager())).setSpanCount(gridColumnSpan);
         }
 
-        if (savedInstanceState != null) {
+        /*
+         * savedInstanceState.containsKey(null) is required to skip the case that network was unavailable and then the device was rotated,
+         * In the case, savedInstanceState is not null but contains no key.
+         */
+        if (savedInstanceState != null && savedInstanceState.containsKey(null)) {
             recipes = savedInstanceState.getParcelableArrayList(null);
             setAdapter(binding);
             return;
@@ -87,7 +93,10 @@ public class RecipeActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelableArrayList(null, Converter.toArrayList(recipes));
+        // recipes is null if network is unavailable.
+        if (recipes != null) {
+            outState.putParcelableArrayList(null, Converter.toArrayList(recipes));
+        }
         super.onSaveInstanceState(outState);
     }
 

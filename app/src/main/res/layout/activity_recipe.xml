@@ -4,7 +4,9 @@
 
     <LinearLayout style="@style/linear_layout">
 
-        <include layout="@layout/recipes_label" />
+        <include
+            android:id="@+id/recipes_label"
+            layout="@layout/recipes_label" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recipe_recycler_view"
