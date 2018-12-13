@@ -1,20 +1,28 @@
 package com.example.android.bakingapp.room;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Step implements Parcelable {
-    public final int id;
+import androidx.room.ColumnInfo;
 
+public class Step implements Parcelable {
+    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
+        @Override
+        public Step createFromParcel(Parcel source) {
+            return new Step(source);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
+    public final int id;
     @ColumnInfo(name = "short_description")
     public final String shortDescription;
-
     public final String description;
-
     @ColumnInfo(name = "video_url")
     public final String videoURL;
-
     @ColumnInfo(name = "thumbnail_url")
     public final String thumbnailURL;
 
@@ -39,16 +47,4 @@ public class Step implements Parcelable {
         dest.writeString(videoURL);
         dest.writeString(thumbnailURL);
     }
-
-    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
-        @Override
-        public Step createFromParcel(Parcel source) {
-            return new Step(source);
-        }
-
-        @Override
-        public Step[] newArray(int size) {
-            return new Step[size];
-        }
-    };
 }

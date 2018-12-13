@@ -1,14 +1,8 @@
 package com.example.android.bakingapp.ui.activity;
 
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +22,12 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LiveData;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import dagger.android.AndroidInjection;
 
 import static com.example.android.bakingapp.ui.fragment.RecipeDetailFragment.RECIPE_PARCELABLE_EXTRA_KEY;
@@ -41,7 +41,7 @@ public class RecipeActivity extends AppCompatActivity {
 
     @Inject
     RecipeViewModel recipeViewModel;
-
+    private ActivityRecipeBinding binding;
     private List<Recipe> recipes;
 
     @Override
@@ -49,7 +49,7 @@ public class RecipeActivity extends AppCompatActivity {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
-        ActivityRecipeBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe);
 
         if (!NetworkUtils.isNetworkAvailable(this)) {
             showToast(getString(R.string.network_unavailable_error));
@@ -61,13 +61,10 @@ public class RecipeActivity extends AppCompatActivity {
             ((GridLayoutManager) Objects.requireNonNull(binding.recipeRecyclerView.getLayoutManager())).setSpanCount(gridColumnSpan);
         }
 
-        /*
-         * savedInstanceState.containsKey(null) is required to skip the case that network was unavailable and then the device was rotated,
-         * In the case, savedInstanceState is not null but contains no key.
-         */
+        // If network was unavailable and then the device was rotated, savedInstanceState is not null but contains no key.
         if (savedInstanceState != null && savedInstanceState.containsKey(null)) {
             recipes = savedInstanceState.getParcelableArrayList(null);
-            setAdapter(binding);
+            setAdapter();
             return;
         }
 
@@ -82,7 +79,7 @@ public class RecipeActivity extends AppCompatActivity {
                  */
                 if (!Objects.requireNonNull(recipes).isEmpty()) {
                     this.recipes = recipes;
-                    setAdapter(binding);
+                    setAdapter();
                     response.data.removeObservers(this);
                 }
             });
@@ -100,7 +97,7 @@ public class RecipeActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-    private void setAdapter(ActivityRecipeBinding binding) {
+    private void setAdapter() {
         binding.recipeRecyclerView.setAdapter(new Adapter(recipes));
     }
 

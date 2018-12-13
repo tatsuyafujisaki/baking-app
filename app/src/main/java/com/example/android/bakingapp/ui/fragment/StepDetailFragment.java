@@ -3,12 +3,6 @@ package com.example.android.bakingapp.ui.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.idling.CountingIdlingResource;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,11 +24,17 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.fragment.app.Fragment;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.idling.CountingIdlingResource;
 import dagger.android.support.AndroidSupportInjection;
 
 public class StepDetailFragment extends Fragment {
-    public static final String RECIPE_PARCELABLE_EXTRA_KEY = "RECIPE_PARCELABLE_EXTRA_KEY";
-    public static final String STEP_INDEX_INT_EXTRA_KEY = "STEP_INDEX_INT_EXTRA_KEY";
+    static final String STEP_INDEX_INT_EXTRA_KEY = "STEP_INDEX_INT_EXTRA_KEY";
+    private static final String RECIPE_PARCELABLE_EXTRA_KEY = "RECIPE_PARCELABLE_EXTRA_KEY";
     private static final String PLAY_WHEN_READY_BOOL_EXTRA_KEY = "PLAY_WHEN_READY_BOOL_EXTRA_KEY";
     private static final String CURRENT_POSITION_LONG_EXTRA_KEY = "CURRENT_POSITION_LONG_EXTRA_KEY";
     @Nullable
@@ -71,12 +71,11 @@ public class StepDetailFragment extends Fragment {
 
         requireActivity().setTitle(recipe.name);
 
-        /*
-         * savedInstanceState.containsKey(null) is required to skip the case that network was unavailable and then the device was rotated,
-         * In the case, savedInstanceState is not null but contains no key.
-         */
-        if (savedInstanceState != null && savedInstanceState.containsKey(null)) {
-            stepIndex = savedInstanceState.getInt(STEP_INDEX_INT_EXTRA_KEY);
+        if (savedInstanceState != null) {
+            // If network was unavailable and then the device was rotated, savedInstanceState is not null but contains no key.
+            if (savedInstanceState.containsKey(STEP_INDEX_INT_EXTRA_KEY)) {
+                stepIndex = savedInstanceState.getInt(STEP_INDEX_INT_EXTRA_KEY);
+            }
 
             // savedInstanceState does not contain PLAY_WHEN_READY_BOOL_EXTRA_KEY if the current step of a recipe has no video.
             if (savedInstanceState.containsKey(PLAY_WHEN_READY_BOOL_EXTRA_KEY)) {

@@ -1,8 +1,5 @@
 package com.example.android.bakingapp.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
-
 import com.example.android.bakingapp.room.entity.Recipe;
 import com.example.android.bakingapp.room.repository.RecipeRepository;
 import com.example.android.bakingapp.util.ApiResponse;
@@ -10,6 +7,9 @@ import com.example.android.bakingapp.util.ApiResponse;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 public class RecipeViewModel extends ViewModel {
     private final RecipeRepository recipeRepository;

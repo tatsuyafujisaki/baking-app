@@ -2,11 +2,12 @@ package com.example.android.bakingapp.util.ui;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 public class FragmentUtils {
     public static int getInt(Fragment fragment, String key) {

@@ -1,15 +1,16 @@
 package com.example.android.bakingapp.room;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.room.dao.RecipeDao;
 import com.example.android.bakingapp.room.entity.Recipe;
 
-@Database(entities = { Recipe.class}, version = 1, exportSchema = false)
+import androidx.room.Database;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+
+@Database(entities = {Recipe.class}, version = 1, exportSchema = false)
 public abstract class RecipeDatabase extends RoomDatabase {
     private static RecipeDatabase instance;
 

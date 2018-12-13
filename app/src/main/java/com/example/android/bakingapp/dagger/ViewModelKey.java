@@ -1,6 +1,6 @@
 package com.example.android.bakingapp.dagger;
 
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel;
 
 import dagger.MapKey;
 

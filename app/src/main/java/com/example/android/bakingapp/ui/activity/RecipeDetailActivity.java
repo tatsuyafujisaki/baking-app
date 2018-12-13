@@ -1,15 +1,15 @@
 package com.example.android.bakingapp.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.espresso.idling.CountingIdlingResource;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bakingapp.R;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.idling.CountingIdlingResource;
 import dagger.android.AndroidInjection;
 
 public class RecipeDetailActivity extends AppCompatActivity {

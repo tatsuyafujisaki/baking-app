@@ -2,11 +2,12 @@ package com.example.android.bakingapp.util.ui;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 
 import com.example.android.bakingapp.util.converter.Converter;
 
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
 
 public class FragmentBuilder {
     private final Fragment fragment;

@@ -1,12 +1,11 @@
 package com.example.android.bakingapp.dagger.module;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-
 import com.example.android.bakingapp.dagger.ViewModelFactory;
 import com.example.android.bakingapp.dagger.ViewModelKey;
 import com.example.android.bakingapp.viewmodel.RecipeViewModel;
 
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;

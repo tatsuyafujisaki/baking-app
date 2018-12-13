@@ -1,14 +1,14 @@
 package com.example.android.bakingapp.dagger;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
-
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 @Singleton
 public class ViewModelFactory implements ViewModelProvider.Factory {
@@ -21,7 +21,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     @NonNull
     @Override
-    @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         Provider<? extends ViewModel> creator = creators.get(modelClass);
         if (creator == null) {

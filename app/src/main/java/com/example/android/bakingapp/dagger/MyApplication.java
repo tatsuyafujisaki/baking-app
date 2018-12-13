@@ -3,7 +3,7 @@ package com.example.android.bakingapp.dagger;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Service;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import javax.inject.Inject;
 

@@ -1,10 +1,10 @@
 package com.example.android.bakingapp.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bakingapp.R;
 
+import androidx.appcompat.app.AppCompatActivity;
 import dagger.android.AndroidInjection;
 
 public class StepDetailActivity extends AppCompatActivity {

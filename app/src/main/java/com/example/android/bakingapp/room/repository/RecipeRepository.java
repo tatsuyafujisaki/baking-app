@@ -1,8 +1,6 @@
 package com.example.android.bakingapp.room.repository;
 
-import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 
 import com.example.android.bakingapp.room.dao.RecipeDao;
 import com.example.android.bakingapp.room.entity.Recipe;
@@ -17,6 +15,8 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -2,10 +2,11 @@ package com.example.android.bakingapp.util.ui;
 
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import androidx.fragment.app.Fragment;
 
 public class IntentUtils {
     public static String requireAction(Intent intent) {

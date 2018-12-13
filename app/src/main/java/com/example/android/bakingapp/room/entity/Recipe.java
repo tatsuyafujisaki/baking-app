@@ -1,8 +1,5 @@
 package com.example.android.bakingapp.room.entity;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -14,16 +11,29 @@ import com.example.android.bakingapp.util.converter.StepsConverter;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
 @Entity
 public class Recipe implements Parcelable {
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel source) {
+            return new Recipe(source);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
     @PrimaryKey
     public int id;
     public String name;
     public int servings;
-
     @TypeConverters(IngredientsConverter.class)
     public List<Ingredient> ingredients;
-
     @TypeConverters(StepsConverter.class)
     public List<Step> steps;
 
@@ -55,16 +65,4 @@ public class Recipe implements Parcelable {
         dest.writeTypedList(ingredients);
         dest.writeTypedList(steps);
     }
-
-    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
-        @Override
-        public Recipe createFromParcel(Parcel source) {
-            return new Recipe(source);
-        }
-
-        @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
-        }
-    };
 }

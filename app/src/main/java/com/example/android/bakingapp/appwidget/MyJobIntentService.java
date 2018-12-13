@@ -2,12 +2,8 @@ package com.example.android.bakingapp.appwidget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.app.JobIntentService;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.SparseIntArray;
 import android.widget.RemoteViews;
 
@@ -23,6 +19,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.JobIntentService;
+import androidx.core.app.TaskStackBuilder;
+import androidx.lifecycle.LiveData;
 import dagger.android.AndroidInjection;
 
 public class MyJobIntentService extends JobIntentService {

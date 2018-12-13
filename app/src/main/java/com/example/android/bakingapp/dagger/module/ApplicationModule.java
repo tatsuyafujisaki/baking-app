@@ -1,12 +1,8 @@
 package com.example.android.bakingapp.dagger.module;
 
 import android.app.Application;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.v4.app.FragmentActivity;
 import android.webkit.WebSettings;
 
 import com.example.android.bakingapp.R;
@@ -28,6 +24,10 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
